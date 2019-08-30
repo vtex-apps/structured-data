@@ -18,7 +18,7 @@ const GoogleSearchBox = () => {
         {`
             "@context": "http://schema.org",
             "@type": "WebSite",
-            "url": \`${protocol}//${hostname}/\`,
+            "url": \`${protocol}//${hostname}/{__RUNTIME__.rootPath || ''}\`,
             "potentialAction": {
                 "@type": "SearchAction",
                 "target": \`${protocol}//${hostname}/{search_term_string}\`,
