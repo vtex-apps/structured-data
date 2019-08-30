@@ -7,6 +7,7 @@ declare var global: {
   __hostname__: string
   __protocol__: string
   __pathname__: string
+  __RUNTIME__: any
 }
 
 const GoogleSearchBox = () => {
@@ -18,7 +19,7 @@ const GoogleSearchBox = () => {
         {`
             "@context": "http://schema.org",
             "@type": "WebSite",
-            "url": \`${protocol}//${hostname}/{__RUNTIME__.rootPath || ''}\`,
+            "url": \`${protocol}//${hostname}/${global.__RUNTIME__.rootPath || ''}\`,
             "potentialAction": {
                 "@type": "SearchAction",
                 "target": \`${protocol}//${hostname}/{search_term_string}\`,
