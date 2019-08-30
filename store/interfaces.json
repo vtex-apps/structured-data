@@ -1,5 +1,5 @@
 {
-  "base-store-component": {
-    "component": "Example"
+  "google-search-box": {
+    "component": "GoogleSearchBox"
   }
 }
