@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Fixed
 - Fix `potentialAction.target`.
+- Fix protocol in SSR.
 
 ## [0.0.2] - 2019-08-30
 ### Added

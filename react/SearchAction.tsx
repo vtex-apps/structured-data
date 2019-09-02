@@ -2,18 +2,28 @@ import React from 'react'
 import { Helmet } from 'react-helmet'
 import { canUseDOM } from 'vtex.render-runtime'
 
+interface Runtime {
+  rootPath?: string
+}
+
 declare var global: {
   __hostname__: string
   __protocol__: string
   __pathname__: string
-  __RUNTIME__: {
-    rootPath?: string
-  }
+  __RUNTIME__: Runtime
+}
+
+declare var window: {
+  __RUNTIME__: Runtime
+  location: Location
 }
 
 const SearchAction = () => {
+  const protocol = 'https'
   const hostname = canUseDOM ? window.location.hostname : global.__hostname__
-  const protocol = canUseDOM ? window.location.protocol : global.__protocol__
+  const rootPath = canUseDOM ? window.__RUNTIME__.rootPath : global.__RUNTIME__.rootPath
+
+  const baseUrl = `${protocol}//${hostname}/${rootPath || ''}`
 
   const baseUrl = `${protocol}//${hostname}/${global.__RUNTIME__.rootPath || ''}`
 
