@@ -25,22 +25,20 @@ const SearchAction = () => {
 
   const baseUrl = `${protocol}//${hostname}/${rootPath || ''}`
 
-  const baseUrl = `${protocol}//${hostname}/${global.__RUNTIME__.rootPath || ''}`
+  const schema = {
+    '@context': 'http://schema.org',
+    '@type': 'Website',
+    url: baseUrl,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: baseUrl + '{search_term_string}',
+      'query-input': 'required name=search_term_string'
+    }
+  }
 
   return (
     <Helmet>
-      <script type="application/ld+json">
-        {`
-          "@context": "http://schema.org",
-          "@type": "WebSite",
-          "url": "${baseUrl}",
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "${baseUrl}{search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        `}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(schema)}</script>
     </Helmet>
   )
 }

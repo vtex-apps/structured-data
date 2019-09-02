@@ -10,8 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Name of the component to `SearchAction` to be more generic.
 
 ### Fixed
-- Fix `potentialAction.target`.
-- Fix protocol in SSR.
+- `potentialAction.target`.
+- Protocol in SSR.
+- Minify JSON.
 
 ## [0.0.2] - 2019-08-30
 ### Added
