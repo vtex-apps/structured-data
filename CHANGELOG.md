@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Move code of Product Structured Data from `vtex.store` to this app.
 
 ### Fixed
-- Remove offer if the product is unavailable. We used to fill the price with zero, providing Google the wrong information.
+- Remove markup if the product is unavailable. We used to fill the price with zero, providing Google the wrong information.
 
 ## [0.1.2] - 2019-09-05
 ### Fixed

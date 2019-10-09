@@ -79,7 +79,7 @@ const composeAggregateOffer = (product, currency) => {
     .filter(Boolean)
 
   if (offersList.length === 0) {
-    return undefined
+    return null
   }
 
   const aggregateOffer = {
@@ -104,6 +104,12 @@ export const parseToJsonLD = (product, selectedItem, currency) => {
   const brand = product.brand
   const name = product.productName
 
+  const offers = composeAggregateOffer(product, currency)
+
+  if (offers === null) {
+    return null
+  }
+
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
@@ -114,7 +120,7 @@ export const parseToJsonLD = (product, selectedItem, currency) => {
     mpn: product.productId,
     sku: selectedItem.itemId,
     category: getCategoryName(product),
-    offers: composeAggregateOffer(product, currency),
+    offers,
   }
 
   return productLD

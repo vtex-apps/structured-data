@@ -60,8 +60,8 @@ describe('Product Structured Data', () => {
       currency
     )
 
-    expect(resultOneSku.offers).toBeUndefined()
-    expect(resultTwoSkus.offers).toBeUndefined()
+    expect(resultOneSku).toBeNull()
+    expect(resultTwoSkus).toBeNull()
   })
 
   it('should handle multiple sellers correctly, get correct low price and high price', () => {
