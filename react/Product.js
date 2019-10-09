@@ -63,7 +63,7 @@ const parseSKUToOffer = (item, currency) => {
 }
 
 const getAllSellers = items => {
-  const allSellers = items.map(i => i.sellers)
+  const allSellers = items.map(item => item.sellers)
   const flat = flatten(allSellers)
   return flat
 }
@@ -95,6 +95,8 @@ const composeAggregateOffer = (product, currency) => {
 }
 
 const getCategoryName = product =>
+  product.categoryTree &&
+  product.categoryTree.length > 0 &&
   product.categoryTree[product.categoryTree.length - 1].name
 
 export const parseToJsonLD = (product, selectedItem, currency) => {
@@ -111,10 +113,7 @@ export const parseToJsonLD = (product, selectedItem, currency) => {
     description: product.metaTagDescription,
     mpn: product.productId,
     sku: selectedItem.itemId,
-    category:
-      product.categoryTree &&
-      product.categoryTree.length > 0 &&
-      getCategoryName(product),
+    category: getCategoryName(product),
     offers: composeAggregateOffer(product, currency),
   }
 
