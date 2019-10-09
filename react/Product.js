@@ -26,10 +26,11 @@ const lowHighForSellers = sellers => {
   }
 }
 
+const IN_STOCK = 'http://schema.org/InStock'
+const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
+
 const getSKUAvailabilityString = seller =>
-  isSkuAvailable(seller)
-    ? 'http://schema.org/InStock'
-    : 'http://schema.org/OutOfStock'
+  isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
 const parseSKUToOffer = (item, currency) => {
   const { low: seller } = lowHighForSellers(item.sellers)
@@ -41,7 +42,7 @@ const parseSKUToOffer = (item, currency) => {
   // If we set structured data product price as zero, Google will show that the
   // product it's free (wrong info), but out of stock.
   // It's better just not return any offer in that case.
-  if (availability === 'http://schema.org/OutOfStock' && price === 0) {
+  if (availability === OUT_OF_STOCK && price === 0) {
     return null
   }
 
