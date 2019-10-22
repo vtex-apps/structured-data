@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- Move code of Product Structured Data from `vtex.store` to this app.
+
+### Fixed
+- Remove markup if the product is unavailable. We used to fill the price with zero, providing Google the wrong information.
 
 ## [0.1.2] - 2019-09-05
 ### Fixed
