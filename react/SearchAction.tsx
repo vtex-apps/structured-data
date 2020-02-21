@@ -1,6 +1,6 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
-import { canUseDOM, useRuntime } from 'vtex.render-runtime'
+import { canUseDOM } from 'vtex.render-runtime'
 
 interface Runtime {
   rootPath?: string
@@ -18,17 +18,15 @@ declare var window: {
   location: Location
 }
 
-const SearchAction = () => {
-  const runtime = useRuntime()
+const SearchAction = ({ searchTermPath }: { searchTermPath: string }) => {
   const protocol = 'https'
   const hostname = canUseDOM ? window.location.hostname : global.__hostname__
   const rootPath = canUseDOM
     ? window.__RUNTIME__.rootPath
     : global.__RUNTIME__.rootPath
 
-  const baseUrl = `${protocol}://${hostname}${rootPath || ''}/`
-  const { searchTerm } = runtime.getSettings('vtex.store')
-  const urlTerm = searchTerm != undefined ? searchTerm : ''
+  const baseUrl = `${protocol}://${hostname}${rootPath || ''}`
+  const urlTerm = searchTermPath != undefined ? searchTermPath : '/'
 
   const schema = {
     '@context': 'http://schema.org',

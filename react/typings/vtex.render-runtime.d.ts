@@ -35,8 +35,4 @@ declare module 'vtex.render-runtime' {
   export const withRuntimeContext: <TOriginalProps extends {}>(
     Component: ComponentType<TOriginalProps & RenderContextProps>
   ) => ComponentType<TOriginalProps>
-  export interface RuntimeContext {
-    getSettings: (app: string) => any
-  }
-  export const useRuntime = function(): RuntimeContext
 }
