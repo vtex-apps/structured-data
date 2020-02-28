@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Helmet } from 'react-helmet'
 import { canUseDOM } from 'vtex.render-runtime'
 
 interface Runtime {
   rootPath?: string
+}
+
+interface Props {
+  searchTermPath?: string
 }
 
 declare var global: {
@@ -18,7 +22,7 @@ declare var window: {
   location: Location
 }
 
-const SearchAction = ({ searchTermPath }: { searchTermPath: string }) => {
+const SearchAction: FC<Props> = ({ searchTermPath }) => {
   const protocol = 'https'
   const hostname = canUseDOM ? window.location.hostname : global.__hostname__
   const rootPath = canUseDOM
