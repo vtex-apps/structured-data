@@ -30,7 +30,7 @@ const SearchAction: FC<Props> = ({ searchTermPath }) => {
     : global.__RUNTIME__.rootPath
 
   const baseUrl = `${protocol}://${hostname}${rootPath || ''}`
-  const urlTerm = searchTermPath != undefined ? searchTermPath : '/'
+  const path = !searchTermPath ? '/' : searchTermPath
 
   const schema = {
     '@context': 'http://schema.org',
@@ -38,7 +38,7 @@ const SearchAction: FC<Props> = ({ searchTermPath }) => {
     url: baseUrl,
     potentialAction: {
       '@type': 'SearchAction',
-      target: `${baseUrl + urlTerm}{search_term_string}`,
+      target: `${baseUrl}${path}{search_term_string}`,
       'query-input': 'required name=search_term_string',
     },
   }
