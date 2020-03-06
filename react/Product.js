@@ -1,4 +1,5 @@
 import React, { memo } from 'react'
+import { Helmet } from 'react-helmet'
 import { useRuntime } from 'vtex.render-runtime'
 import PropTypes from 'prop-types'
 import { pathOr, path, sort, last, flatten } from 'ramda'
@@ -133,7 +134,11 @@ function StructuredData({ product, selectedItem }) {
   } = useRuntime()
   const productLD = parseToJsonLD(product, selectedItem, currency, locale)
 
-  return <script type="application/ld+json">{JSON.stringify(productLD)}</script>
+  return (
+    <Helmet>
+      <script type="application/ld+json">{JSON.stringify(productLD)}</script>
+    </Helmet>
+  )
 }
 
 StructuredData.propTypes = {
