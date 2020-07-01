@@ -22,6 +22,22 @@ describe('Product Structured Data', () => {
     expect(result.category).toBe('Category C')
   })
 
+  it('should use spotPrice as lowPrice', () => {
+    const product = createProduct()
+    const cheapItem = createItem({
+      id: '2',
+      spotPrice: 40,
+      price: 45,
+      quantity: 1,
+    })
+    product.items.push(cheapItem)
+
+    const result = parseToJsonLD(product, product.items[0], currency)
+
+    expect(result.offers.lowPrice).toBe(40)
+    expect(result.offers.highPrice).toBe(45)
+  })
+
   it('should handle many skus availability', () => {
     const product = createProduct()
     const unavailableItem = createItem({ id: '2', price: 0, quantity: 0 })
@@ -81,7 +97,7 @@ describe('Product Structured Data', () => {
   it('should handle multiple sellers and multiple items correctly, get correct low price and high price', () => {
     const copyProduct = clone(mktPlaceProduct)
     const item = clone(copyProduct.items[0])
-    item.sellers[2].commertialOffer.Price = 1000
+    item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 
     const result = parseToJsonLD(copyProduct, copyProduct.items[0], currency)
