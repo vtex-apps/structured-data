@@ -27,6 +27,7 @@ export const createProduct = () => {
 export const createItem = ({
   id = '1',
   price = 90,
+  spotPrice = price,
   quantity = 10,
   customFields = {},
 }) => {
@@ -51,6 +52,7 @@ export const createItem = ({
           AvailableQuantity: quantity,
           ListPrice: price + 10,
           Price: price,
+          spotPrice,
         },
       },
     ],

@@ -59,6 +59,7 @@ export const product = {
             discountHighlights: [],
             teasers: [],
             Price: 0,
+            spotPrice: 0,
             ListPrice: 0,
             PriceWithoutDiscount: 0,
             RewardValue: 0,
