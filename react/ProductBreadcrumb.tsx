@@ -13,7 +13,7 @@ export const productBreadcrumb = (
   productName?: string,
   productSlug?: string
 ): BreadcrumbList | {} => {
-  if (!categoryTree || !Array.isArray(categoryTree)) {
+  if (!Array.isArray(categoryTree)) {
     return {}
   }
 
@@ -26,22 +26,19 @@ export const productBreadcrumb = (
     item: baseUrl + category.href,
   }))
 
-  const productItem =
-    productName && productSlug
-      ? [
-          {
-            '@type': 'ListItem',
-            position: categoryItems.length + 1,
-            name: productName,
-            item: `${baseUrl}/${productSlug}/p`,
-          },
-        ]
-      : []
+  if (productName && productSlug) {
+    categoryItems.push({
+      '@type': 'ListItem',
+      position: categoryItems.length + 1,
+      name: productName,
+      item: `${baseUrl}/${productSlug}/p`,
+    })
+  }
 
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    itemListElement: categoryItems.concat(...productItem),
+    itemListElement: categoryItems,
   }
 }
 
