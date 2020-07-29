@@ -8,7 +8,7 @@ interface SearchBreadcrumbItem {
   href: string
 }
 
-const searchBreadcrumb = (
+const getSearchBreadcrumb = (
   breadcrumb?: SearchBreadcrumbItem[]
 ): BreadcrumbList | {} => {
   if (!Array.isArray(breadcrumb)) {
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const SearchBreadcrumbStructuredData: FC<Props> = ({ breadcrumb }) => {
-  const breadcrumbLD = searchBreadcrumb(breadcrumb)
+  const breadcrumbLD = getSearchBreadcrumb(breadcrumb)
 
   return (
     <script

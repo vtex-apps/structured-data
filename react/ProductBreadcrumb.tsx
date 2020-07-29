@@ -8,7 +8,7 @@ interface CategoryTreeItem {
   href: string
 }
 
-export const productBreadcrumb = (
+export const getProductBreadcrumb = (
   categoryTree?: CategoryTreeItem[],
   productName?: string,
   productSlug?: string
@@ -53,7 +53,11 @@ const ProductBreadcrumbStructuredData: FC<Props> = ({
   productName,
   productSlug,
 }) => {
-  const breadcrumbLD = productBreadcrumb(categoryTree, productName, productSlug)
+  const breadcrumbLD = getProductBreadcrumb(
+    categoryTree,
+    productName,
+    productSlug
+  )
 
   return (
     <script
