@@ -1,7 +1,8 @@
-import { parseToJsonLD } from '../Product'
-import { createProduct, createItem } from '../__mocks__/productMock'
-import { product as mktPlaceProduct } from '../__mocks__/marketplaceProductMock'
 import { clone } from 'ramda'
+
+import { parseToJsonLD } from '../Product'
+import { createProduct, createItem } from '../__fixtures__/productMock'
+import { product as mktPlaceProduct } from '../__fixtures__/marketplaceProductMock'
 
 const currency = 'BRL'
 
@@ -10,6 +11,7 @@ describe('Product Structured Data', () => {
     const product = createProduct()
     const cheapItem = createItem({ id: '2', price: 45, quantity: 1 })
     const expensiveItem = createItem({ id: '3', price: 60, quantity: 2 })
+
     product.items.push(cheapItem)
     product.items.push(expensiveItem)
 
@@ -30,6 +32,7 @@ describe('Product Structured Data', () => {
       price: 45,
       quantity: 1,
     })
+
     product.items.push(cheapItem)
 
     const result = parseToJsonLD(product, product.items[0], currency)
@@ -42,6 +45,7 @@ describe('Product Structured Data', () => {
     const product = createProduct()
     const unavailableItem = createItem({ id: '2', price: 0, quantity: 0 })
     const availableItem = createItem({ id: '3', price: 60, quantity: 1 })
+
     product.items.push(unavailableItem)
     product.items.push(availableItem)
 
@@ -59,9 +63,11 @@ describe('Product Structured Data', () => {
   it('should handle product that have only skus that are unavailable', () => {
     const productOneSku = createProduct()
     const unavailableItem = createItem({ id: '1', price: 0, quantity: 0 })
+
     productOneSku.items.push(unavailableItem)
 
     const productTwoSkus = createProduct()
+
     productTwoSkus.items.push(unavailableItem)
     productTwoSkus.items.push(unavailableItem)
 
@@ -70,6 +76,7 @@ describe('Product Structured Data', () => {
       productOneSku.items[0],
       currency
     )
+
     const resultTwoSkus = parseToJsonLD(
       productTwoSkus,
       productTwoSkus.items[0],
@@ -97,6 +104,7 @@ describe('Product Structured Data', () => {
   it('should handle multiple sellers and multiple items correctly, get correct low price and high price', () => {
     const copyProduct = clone(mktPlaceProduct)
     const item = clone(copyProduct.items[0])
+
     item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 

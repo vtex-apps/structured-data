@@ -10,14 +10,14 @@ interface Props {
   searchTermPath?: string
 }
 
-declare var global: {
+declare let global: {
   __hostname__: string
   __protocol__: string
   __pathname__: string
   __RUNTIME__: Runtime
 }
 
-declare var window: {
+declare let window: {
   __RUNTIME__: Runtime
   location: Location
 }
@@ -29,7 +29,7 @@ const SearchAction: FC<Props> = ({ searchTermPath }) => {
     ? window.__RUNTIME__.rootPath
     : global.__RUNTIME__.rootPath
 
-  const baseUrl = `${protocol}://${hostname}${rootPath || ''}`
+  const baseUrl = `${protocol}://${hostname}${rootPath ?? ''}`
   const path = !searchTermPath ? '/' : searchTermPath
 
   const schema = {
