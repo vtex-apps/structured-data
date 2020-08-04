@@ -1,20 +1,24 @@
+/* eslint-disable react/jsx-filename-extension */
 import React, { memo } from 'react'
-import { Helmet } from 'react-helmet'
 import { useRuntime } from 'vtex.render-runtime'
 import PropTypes from 'prop-types'
+// eslint-disable-next-line no-restricted-imports
 import { pathOr, path, sort, last, flatten } from 'ramda'
 
 const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
 
-const sortByPriceAsc = sort((itemA, itemB) => getSpotPrice(itemA) - getSpotPrice(itemB))
+const sortByPriceAsc = sort(
+  (itemA, itemB) => getSpotPrice(itemA) - getSpotPrice(itemB)
+)
 
-const isSkuAvailable = sku => getAvailableQuantity(sku) > 0
+const isSkuAvailable = (sku) => getAvailableQuantity(sku) > 0
 
-const lowHighForSellers = sellers => {
+const lowHighForSellers = (sellers) => {
   const sortedByPrice = sortByPriceAsc(sellers)
   const withStock = sortedByPrice.filter(isSkuAvailable)
+
   if (withStock.length === 0) {
     return {
       low: sortedByPrice[0],
@@ -31,7 +35,7 @@ const lowHighForSellers = sellers => {
 const IN_STOCK = 'http://schema.org/InStock'
 const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 
-const getSKUAvailabilityString = seller =>
+const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
 const parseSKUToOffer = (item, currency) => {
@@ -65,9 +69,10 @@ const parseSKUToOffer = (item, currency) => {
   return offer
 }
 
-const getAllSellers = items => {
-  const allSellers = items.map(item => item.sellers)
+const getAllSellers = (items) => {
+  const allSellers = items.map((item) => item.sellers)
   const flat = flatten(allSellers)
+
   return flat
 }
 
@@ -78,7 +83,7 @@ const composeAggregateOffer = (product, currency) => {
   const { low, high } = lowHighForSellers(allSellers)
 
   const offersList = items
-    .map(element => parseSKUToOffer(element, currency))
+    .map((element) => parseSKUToOffer(element, currency))
     .filter(Boolean)
 
   if (offersList.length === 0) {
@@ -97,14 +102,14 @@ const composeAggregateOffer = (product, currency) => {
   return aggregateOffer
 }
 
-const getCategoryName = product =>
+const getCategoryName = (product) =>
   product.categoryTree &&
   product.categoryTree.length > 0 &&
   product.categoryTree[product.categoryTree.length - 1].name
 
 export const parseToJsonLD = (product, selectedItem, currency) => {
-  const image = selectedItem.images[0]
-  const brand = product.brand
+  const [image] = selectedItem.images
+  const { brand } = product
   const name = product.productName
 
   const offers = composeAggregateOffer(product, currency)
@@ -116,8 +121,8 @@ export const parseToJsonLD = (product, selectedItem, currency) => {
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
-    name: name,
-    brand: brand,
+    name,
+    brand,
     image: image && image.imageUrl,
     description: product.metaTagDescription,
     mpn: product.productId,
@@ -133,13 +138,14 @@ function StructuredData({ product, selectedItem }) {
   const {
     culture: { currency, locale },
   } = useRuntime()
+
   const productLD = parseToJsonLD(product, selectedItem, currency, locale)
 
   return (
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }}
-    ></script>
+    />
   )
 }
 

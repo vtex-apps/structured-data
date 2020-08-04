@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react'
 
 export const useRuntime = () => {
@@ -15,7 +16,7 @@ export const Helmet = ({ title, meta }) => {
   return (
     <div>
       <title>{title}</title>
-      {meta.map(m => {
+      {meta.map((m) => {
         return (
           <meta
             key={m.name}
