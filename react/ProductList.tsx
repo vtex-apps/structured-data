@@ -1,14 +1,10 @@
 import React, { FC } from 'react'
+import { Product } from 'vtex.catalog-graphql'
+
 import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
-
-interface CategoryTreeItem {
-  name: string
-  href: string
-}
-
-export const getProductList = (products?: any): ProductList | {} => {
+export const getProductList = (products?: Product): ProductList | {} => {
   if (!Array.isArray(products)) {
     return {}
   }
@@ -30,7 +26,7 @@ export const getProductList = (products?: any): ProductList | {} => {
 }
 
 interface Props {
-  products?: any
+  products?: Product
 }
 
 const ProductBreadcrumbStructuredData: FC<Props> = ({
