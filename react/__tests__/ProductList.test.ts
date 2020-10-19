@@ -4,15 +4,15 @@ import { useRuntime } from '../__mocks__/vtex.render-runtime.js'
 
 describe('Product List Structured Data', () => {
   beforeEach(() => {
-    global['__RUNTIME__'] = useRuntime() 
-    global['__hostname__'] = 'testSuite.com'
+    global.__RUNTIME__ = useRuntime()
+    global.__hostname__ = 'testSuite.com'
   })
 
   it('Should create a list', () => {
     const products = createProductList()
     const productListLD = getProductList(products)
     expect(productListLD['@type']).toBe('ItemList')
-    expect(productListLD.itemListElement.length).toBe(2)
+    expect(productListLD.itemListElement).toHaveLength(2)
     expect(productListLD.itemListElement[0]).toEqual({
       '@type': 'ListItem',
       position: 1,
@@ -27,11 +27,10 @@ describe('Product List Structured Data', () => {
     })
   })
 
-
   it('Handles empty case', () => {
     const products = []
     const productListLD = getProductList(products)
-    expect(productListLD.itemListElement.length).toBe(0)
+    expect(productListLD.itemListElement).toHaveLength(0)
   })
 
   it('Handles undefined case', () => {

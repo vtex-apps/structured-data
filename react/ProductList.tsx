@@ -5,6 +5,7 @@ import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
 export const getProductList = (products?: Product): ProductList | {} => {
+  
   if (!Array.isArray(products)) {
     return {}
   }
@@ -21,7 +22,7 @@ export const getProductList = (products?: Product): ProductList | {} => {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'itemListElement': productItems,
+    itemListElement: productItems,
   }
 }
 
@@ -29,9 +30,7 @@ interface Props {
   products?: Product
 }
 
-const ProductBreadcrumbStructuredData: FC<Props> = ({
-  products,
-}) => {
+const ProductBreadcrumbStructuredData: FC<Props> = ({ products }) => {
   const productListLD = getProductList(products)
 
   return (

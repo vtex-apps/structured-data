@@ -1,4 +1,3 @@
-
 export const createProductList = () => {
   return [
     {
@@ -20,7 +19,11 @@ export const createProductList = () => {
       categoryTree: [
         { id: '1', name: 'Category A', href: 'category-a' },
         { id: '2', name: 'Category B', href: 'category-a/category-b' },
-        { id: '3', name: 'Category C', href: 'category-a/category-b/category-c' },
+        { 
+          id: '3',
+          name: 'Category C',
+          href: 'category-a/category-b/category-c'
+        },
       ],
       items: [],
     },
@@ -47,5 +50,5 @@ export const createProductList = () => {
       ],
       items: [],
     },
-  ] 
+  ]
 }
