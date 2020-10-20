@@ -4,9 +4,8 @@ import { Product } from 'vtex.catalog-graphql'
 import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
-export const getProductList = (
-  products?: Product
-): ProductList | {} => {
+export const getProductList = (products?: Product): ProductList | {} =>
+{
   if (!Array.isArray(products)) {
     return {}
   }
