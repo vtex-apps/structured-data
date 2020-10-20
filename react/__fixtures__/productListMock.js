@@ -19,10 +19,10 @@ export const createProductList = () => {
       categoryTree: [
         { id: '1', name: 'Category A', href: 'category-a' },
         { id: '2', name: 'Category B', href: 'category-a/category-b' },
-        { 
+        {
           id: '3',
           name: 'Category C',
-          href: 'category-a/category-b/category-c'
+          href: 'category-a/category-b/category-c',
         },
       ],
       items: [],
@@ -44,9 +44,21 @@ export const createProductList = () => {
       categoriesIds: ['/1/2/3/', '/1/2/', '/1/'],
       brand: 'Brand',
       categoryTree: [
-        { id: '1', name: 'Category A', href: 'category-a' },
-        { id: '2', name: 'Category B', href: 'category-a/category-b' },
-        { id: '3', name: 'Category C', href: 'category-a/category-b/category-c' },
+        {
+          id: '1',
+          name: 'Category A',
+          href: 'category-a',
+        },
+        {
+          id: '2',
+          name: 'Category B',
+          href: 'category-a/category-b',
+        },
+        {
+          id: '3',
+          name: 'Category C',
+          href: 'category-a/category-b/category-c',
+        },
       ],
       items: [],
     },

@@ -1,10 +1,9 @@
 import { getProductList } from '../ProductList'
 import { createProductList } from '../__fixtures__/productListMock'
-import { useRuntime } from '../__mocks__/vtex.render-runtime.js'
 
 describe('Product List Structured Data', () => {
   beforeEach(() => {
-    global.__RUNTIME__ = useRuntime()
+    global.__RUNTIME__ = {}
     global.__hostname__ = 'testSuite.com'
   })
 

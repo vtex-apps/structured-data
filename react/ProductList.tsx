@@ -5,7 +5,6 @@ import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
 export const getProductList = (products?: Product): ProductList | {} => {
-  
   if (!Array.isArray(products)) {
     return {}
   }
