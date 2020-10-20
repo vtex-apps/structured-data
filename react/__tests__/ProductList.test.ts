@@ -10,6 +10,7 @@ describe('Product List Structured Data', () => {
   it('Should create a list', () => {
     const products = createProductList()
     const productListLD = getProductList(products)
+
     expect(productListLD['@type']).toBe('ItemList')
     expect(productListLD.itemListElement).toHaveLength(2)
     expect(productListLD.itemListElement[0]).toEqual({
@@ -29,12 +30,14 @@ describe('Product List Structured Data', () => {
   it('Handles empty case', () => {
     const products = []
     const productListLD = getProductList(products)
+
     expect(productListLD.itemListElement).toHaveLength(0)
   })
 
   it('Handles undefined case', () => {
     const products = undefined
     const productListLD = getProductList(products)
+
     expect(productListLD).toEqual({})
   })
 })
