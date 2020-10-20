@@ -4,6 +4,10 @@ import { Product } from 'vtex.catalog-graphql'
 import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
+interface Props {
+  products?: Product
+}
+
 export const getProductList = (products?: Product): ProductList | {} => {
   if (!Array.isArray(products)) {
     return {}
@@ -23,10 +27,6 @@ export const getProductList = (products?: Product): ProductList | {} => {
     '@type': 'ItemList',
     itemListElement: productItems,
   }
-}
-
-interface Props {
-  products?: Product
 }
 
 const ProductBreadcrumbStructuredData: FC<Props> = ({ products }) => {
