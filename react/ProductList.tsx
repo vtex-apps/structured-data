@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Product } from 'vtex.catalog-graphql'
+import { Product } from 'vtex.search-graphql'
 
 import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'

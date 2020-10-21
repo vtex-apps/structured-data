@@ -5449,13 +5449,13 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
-"vtex.catalog-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.catalog-graphql@1.88.0/public/@types/vtex.catalog-graphql":
-  version "1.88.0"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.catalog-graphql@1.88.0/public/@types/vtex.catalog-graphql#26b650c2ff7dd4abbe2c4fcd8ec7d0f30b97bb34"
+"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.122.2/public/@types/vtex.render-runtime":
+  version "8.122.2"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.122.2/public/@types/vtex.render-runtime#fa235be2fa6995d12f03f92b20dd3eebb4f3c5fb"
 
-"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.123.1/public/@types/vtex.render-runtime":
-  version "8.123.1"
-  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.123.1/public/@types/vtex.render-runtime#427325fde9f5dddfb7104e7605364c33e5f5fc6d"
+"vtex.search-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.search-graphql@0.36.0/public/_types/react":
+  version "0.0.0"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.search-graphql@0.36.0/public/_types/react#fa7a0347e046eab3dd768998fc9252b2c0dd5aef"
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"

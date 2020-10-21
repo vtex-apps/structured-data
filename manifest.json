@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "vtex.render-runtime": "8.x",
-    "vtex.catalog-graphql": "1.x"
+    "vtex.search-graphql": "0.x"
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
