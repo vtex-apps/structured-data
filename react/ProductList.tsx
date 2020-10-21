@@ -1,14 +1,18 @@
 import React, { FC } from 'react'
-import { Product } from 'vtex.search-graphql'
 
 import { getBaseUrl } from './modules/baseUrl'
 import { ProductList } from './modules/productList'
 
-interface Props {
-  products?: Product
+interface Product {
+  productName: string
+  linkText: string
 }
 
-export const getProductList = (products?: Product): ProductList | {} => {
+interface Props {
+  products?: Product[]
+}
+
+export const getProductList = (products?: Product[]): ProductList | {} => {
   if (!Array.isArray(products)) {
     return {}
   }
