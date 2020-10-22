@@ -4,7 +4,7 @@ export interface BreadcrumbList {
   itemListElement: ListItem[]
 }
 
-interface ListItem {
+export interface ListItem {
   '@type': 'ListItem'
   position: number
   name: string
