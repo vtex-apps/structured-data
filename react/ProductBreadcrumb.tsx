@@ -60,10 +60,7 @@ const ProductBreadcrumbStructuredData: FC<Props> = ({
   )
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLD) }}
-    />
+    <script type="application/ld+json">{JSON.stringify(breadcrumbLD)}</script>
   )
 }
 

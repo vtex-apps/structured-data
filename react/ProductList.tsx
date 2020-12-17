@@ -37,10 +37,7 @@ const ProductBreadcrumbStructuredData: FC<Props> = ({ products }) => {
   const productListLD = getProductList(products)
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(productListLD) }}
-    />
+    <script type="application/ld+json">{JSON.stringify(productListLD)}</script>
   )
 }
 

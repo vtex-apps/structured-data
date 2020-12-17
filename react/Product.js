@@ -141,12 +141,7 @@ function StructuredData({ product, selectedItem }) {
 
   const productLD = parseToJsonLD(product, selectedItem, currency, locale)
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }}
-    />
-  )
+  return <script type="application/ld+json">{JSON.stringify(productLD)}</script>
 }
 
 StructuredData.propTypes = {
