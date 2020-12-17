@@ -1,7 +1,8 @@
 import React, { FC } from 'react'
+import { jsonLdScriptProps } from 'react-schemaorg'
+import { ItemList, ListItem } from 'schema-dts'
 
 import { getBaseUrl } from './modules/baseUrl'
-import { ProductList } from './modules/productList'
 
 interface Product {
   productName: string
@@ -12,33 +13,35 @@ interface Props {
   products?: Product[]
 }
 
-export const getProductList = (products?: Product[]): ProductList | {} => {
+export const getProductList = (products?: Product[]) => {
   if (!Array.isArray(products)) {
-    return {}
+    return null
   }
 
   const baseUrl = getBaseUrl()
 
-  const productItems = products.map((product, index) => ({
+  const productItems: ListItem[] = products.map((product, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     name: product.productName,
     url: `${baseUrl}/${product.linkText}`,
   }))
 
-  return {
+  return jsonLdScriptProps<ItemList>({
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     itemListElement: productItems,
-  }
+  })
 }
 
 const ProductBreadcrumbStructuredData: FC<Props> = ({ products }) => {
   const productListLD = getProductList(products)
 
-  return (
-    <script type="application/ld+json">{JSON.stringify(productListLD)}</script>
-  )
+  if (!productListLD) {
+    return null
+  }
+
+  return <script {...productListLD} />
 }
 
 export default ProductBreadcrumbStructuredData

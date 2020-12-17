@@ -1,6 +1,7 @@
 import React, { FC } from 'react'
+import { BreadcrumbList, ListItem } from 'schema-dts'
+import { jsonLdScriptProps } from 'react-schemaorg'
 
-import { BreadcrumbList } from './modules/breadcrumb'
 import { getBaseUrl } from './modules/baseUrl'
 
 interface CategoryTreeItem {
@@ -12,14 +13,14 @@ export const getProductBreadcrumb = (
   categoryTree?: CategoryTreeItem[],
   productName?: string,
   productSlug?: string
-): BreadcrumbList | {} => {
+) => {
   if (!Array.isArray(categoryTree)) {
-    return {}
+    return null
   }
 
   const baseUrl = getBaseUrl()
 
-  const categoryItems = categoryTree.map((category, index) => ({
+  const categoryItems: ListItem[] = categoryTree.map((category, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     name: category.name,
@@ -35,11 +36,11 @@ export const getProductBreadcrumb = (
     })
   }
 
-  return {
+  return jsonLdScriptProps<BreadcrumbList>({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: categoryItems,
-  }
+  })
 }
 
 interface Props {
@@ -59,9 +60,11 @@ const ProductBreadcrumbStructuredData: FC<Props> = ({
     productSlug
   )
 
-  return (
-    <script type="application/ld+json">{JSON.stringify(breadcrumbLD)}</script>
-  )
+  if (!breadcrumbLD) {
+    return null
+  }
+
+  return <script {...breadcrumbLD} />
 }
 
 export default ProductBreadcrumbStructuredData
