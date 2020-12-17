@@ -38,6 +38,6 @@ describe('Product List Structured Data', () => {
     const products = undefined
     const productListLD = getProductList(products)
 
-    expect(productListLD).toEqual({})
+    expect(productListLD).toBeNull()
   })
 })
