@@ -1,7 +1,8 @@
-import React, { FC } from 'react'
+import React from 'react'
+import { jsonLdScriptProps } from 'react-schemaorg'
+import { ItemList, WithContext, ListItem } from 'schema-dts'
 
 import { getBaseUrl } from './modules/baseUrl'
-import { ProductList } from './modules/productList'
 
 interface Product {
   productName: string
@@ -12,14 +13,14 @@ interface Props {
   products?: Product[]
 }
 
-export const getProductList = (products?: Product[]): ProductList | {} => {
+export function getProductList(products?: Product[]) {
   if (!Array.isArray(products)) {
-    return {}
+    return null
   }
 
   const baseUrl = getBaseUrl()
 
-  const productItems = products.map((product, index) => ({
+  const productItems: ListItem[] = products.map((product, index) => ({
     '@type': 'ListItem',
     position: index + 1,
     name: product.productName,
@@ -30,18 +31,17 @@ export const getProductList = (products?: Product[]): ProductList | {} => {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
     itemListElement: productItems,
+  } as WithContext<ItemList>
+}
+
+function ProductList({ products }: Props) {
+  const productListLD: WithContext<ItemList> | null = getProductList(products)
+
+  if (!productListLD) {
+    return null
   }
+
+  return <script {...jsonLdScriptProps<ItemList>(productListLD)} />
 }
 
-const ProductBreadcrumbStructuredData: FC<Props> = ({ products }) => {
-  const productListLD = getProductList(products)
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(productListLD) }}
-    />
-  )
-}
-
-export default ProductBreadcrumbStructuredData
+export default ProductList

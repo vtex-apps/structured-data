@@ -1,5 +1,7 @@
-import React, { FC } from 'react'
+import React from 'react'
 import { Helmet } from 'react-helmet'
+import { WebSite } from 'schema-dts'
+import { helmetJsonLdProp } from 'react-schemaorg'
 
 import { getBaseUrl } from './modules/baseUrl'
 
@@ -7,25 +9,26 @@ interface Props {
   searchTermPath?: string
 }
 
-const SearchAction: FC<Props> = ({ searchTermPath }) => {
+function SearchAction({ searchTermPath }: Props) {
   const baseUrl = getBaseUrl()
   const path = !searchTermPath ? '/' : searchTermPath
 
-  const schema = {
-    '@context': 'http://schema.org',
-    '@type': 'WebSite',
-    url: baseUrl,
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: `${baseUrl}${path}{search_term_string}`,
-      'query-input': 'required name=search_term_string',
-    },
-  }
-
   return (
-    <Helmet>
-      <script type="application/ld+json">{JSON.stringify(schema)}</script>
-    </Helmet>
+    <Helmet
+      script={[
+        helmetJsonLdProp<WebSite>({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          url: baseUrl,
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: `${baseUrl}${path}{search_term_string}`,
+            // @ts-expect-error it's a valid property
+            'query-input': 'required name=search_term_string',
+          },
+        }),
+      ]}
+    />
   )
 }
 

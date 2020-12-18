@@ -4,6 +4,7 @@ import { useRuntime } from 'vtex.render-runtime'
 import PropTypes from 'prop-types'
 // eslint-disable-next-line no-restricted-imports
 import { pathOr, path, sort, last, flatten } from 'ramda'
+import { jsonLdScriptProps } from 'react-schemaorg'
 
 const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
@@ -141,12 +142,7 @@ function StructuredData({ product, selectedItem }) {
 
   const productLD = parseToJsonLD(product, selectedItem, currency, locale)
 
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(productLD) }}
-    />
-  )
+  return <script {...jsonLdScriptProps(productLD)} />
 }
 
 StructuredData.propTypes = {
