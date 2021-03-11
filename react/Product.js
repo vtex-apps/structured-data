@@ -122,6 +122,7 @@ export const parseToJsonLD = (product, selectedItem, currency) => {
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
+    '@id': product.link,
     name,
     brand,
     image: image && image.imageUrl,
