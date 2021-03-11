@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.6.2] - 2021-03-11
+
 ### Added
 
 - `@id` property to Product structured data so that multiple tags for the same product can be consolidated

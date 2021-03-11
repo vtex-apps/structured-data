@@ -28,5 +28,5 @@
     "typescript": "3.9.7",
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.126.4/public/@types/vtex.render-runtime"
   },
-  "version": "0.6.1"
+  "version": "0.6.2"
 }
