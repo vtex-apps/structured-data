@@ -27,6 +27,10 @@ const getAppSettings = () => {
   }
 }
 
+const getFinalPrice = (value, decimals, pricesWithTax, getPriceFunc) => {
+  return pricesWithTax ? Math.round(((getPriceFunc(value) + getTax(value)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getPriceFunc(value)
+}
+
 const sortByPriceAsc = (sellers, pricesWithTax) => {
   if (pricesWithTax) {
     return sellers.sort((a, b) => getSpotPrice(a) + getTax(a) - getSpotPrice(b) + getTax(b))
@@ -67,7 +71,7 @@ const parseSKUToOffer = (item, currency, decimals, pricesWithTax) => {
 
   const availability = getSKUAvailabilityString(seller)
 
-  const price = pricesWithTax ? Math.round(((getSpotPrice(seller) + getTax(seller)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getSpotPrice(seller)
+  const price = getFinalPrice(seller, decimals, pricesWithTax, getPrice)
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -116,8 +120,8 @@ const composeAggregateOffer = (product, currency, decimals, pricesWithTax) => {
 
   const aggregateOffer = {
     '@type': 'AggregateOffer',
-    lowPrice: pricesWithTax ? Math.round(((getSpotPrice(low) + getTax(low)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getSpotPrice(low),
-    highPrice: pricesWithTax ? Math.round(((getPrice(high) + getTax(high)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getPrice(high),
+    lowPrice: getFinalPrice(low, decimals, pricesWithTax, getSpotPrice),
+    highPrice: getFinalPrice(high, decimals, pricesWithTax, getPrice),
     priceCurrency: currency,
     offers: offersList,
     offerCount: items.length,
