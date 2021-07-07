@@ -5,19 +5,40 @@ import PropTypes from 'prop-types'
 // eslint-disable-next-line no-restricted-imports
 import { pathOr, path, sort, last, flatten } from 'ramda'
 import { jsonLdScriptProps } from 'react-schemaorg'
+import { useQuery } from 'react-apollo'
+import GET_SETTINGS from './queries/getSettings.graphql'
+
 
 const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
+const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
 
-const sortByPriceAsc = sort(
-  (itemA, itemB) => getSpotPrice(itemA) - getSpotPrice(itemB)
-)
+const getAppSettings = () => {
+  const { data } = useQuery(GET_SETTINGS, { ssr: false })
+
+  if (!data) return {decimals: null, pricesWithTax: null}
+
+  const { decimals, pricesWithTax } = JSON.parse(data.appSettings.message)
+
+  return {
+    decimals: decimals,
+    pricesWithTax: pricesWithTax
+  }
+}
+
+const sortByPriceAsc = (sellers, pricesWithTax) => {
+  if (pricesWithTax) {
+    return sellers.sort((a, b) => getSpotPrice(a) + getTax(a) - getSpotPrice(b) + getTax(b))
+  } else {
+    return sellers.sort((a, b) => getSpotPrice(a) - getSpotPrice(b))
+  }
+}
 
 const isSkuAvailable = (sku) => getAvailableQuantity(sku) > 0
 
-const lowHighForSellers = (sellers) => {
-  const sortedByPrice = sortByPriceAsc(sellers)
+const lowHighForSellers = (sellers, pricesWithTax) => {
+  const sortedByPrice = sortByPriceAsc(sellers, pricesWithTax)
   const withStock = sortedByPrice.filter(isSkuAvailable)
 
   if (withStock.length === 0) {
@@ -35,15 +56,18 @@ const lowHighForSellers = (sellers) => {
 
 const IN_STOCK = 'http://schema.org/InStock'
 const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
+const DEFAULT_DECIMALS = 2
+const DEFAULT_PRICES_WITH_TAX = false
 
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const parseSKUToOffer = (item, currency) => {
-  const { low: seller } = lowHighForSellers(item.sellers)
+const parseSKUToOffer = (item, currency, decimals, pricesWithTax) => {
+  const { low: seller } = lowHighForSellers(item.sellers, pricesWithTax)
 
   const availability = getSKUAvailabilityString(seller)
-  const price = getSpotPrice(seller)
+
+  const price = pricesWithTax ? Math.round(((getSpotPrice(seller) + getTax(seller)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getSpotPrice(seller)
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -77,14 +101,13 @@ const getAllSellers = (items) => {
   return flat
 }
 
-const composeAggregateOffer = (product, currency) => {
+const composeAggregateOffer = (product, currency, decimals, pricesWithTax) => {
   const items = product.items || []
-
   const allSellers = getAllSellers(items)
-  const { low, high } = lowHighForSellers(allSellers)
+  const { low, high } = lowHighForSellers(allSellers, pricesWithTax)
 
   const offersList = items
-    .map((element) => parseSKUToOffer(element, currency))
+    .map((element) => parseSKUToOffer(element, currency, decimals, pricesWithTax))
     .filter(Boolean)
 
   if (offersList.length === 0) {
@@ -93,8 +116,8 @@ const composeAggregateOffer = (product, currency) => {
 
   const aggregateOffer = {
     '@type': 'AggregateOffer',
-    lowPrice: getSpotPrice(low),
-    highPrice: getPrice(high),
+    lowPrice: pricesWithTax ? Math.round(((getSpotPrice(low) + getTax(low)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getSpotPrice(low),
+    highPrice: pricesWithTax ? Math.round(((getPrice(high) + getTax(high)) + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals) : getPrice(high),
     priceCurrency: currency,
     offers: offersList,
     offerCount: items.length,
@@ -109,11 +132,12 @@ const getCategoryName = (product) =>
   product.categoryTree[product.categoryTree.length - 1].name
 
 export const parseToJsonLD = (product, selectedItem, currency) => {
+  const { decimals, pricesWithTax } = getAppSettings()
   const [image] = selectedItem.images
   const { brand } = product
   const name = product.productName
 
-  const offers = composeAggregateOffer(product, currency)
+  const offers = composeAggregateOffer(product, currency, decimals ?? DEFAULT_DECIMALS, pricesWithTax ?? DEFAULT_PRICES_WITH_TAX)
 
   if (offers === null) {
     return null
