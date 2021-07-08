@@ -5,6 +5,8 @@ import { createProduct, createItem } from '../__fixtures__/productMock'
 import { product as mktPlaceProduct } from '../__fixtures__/marketplaceProductMock'
 
 const currency = 'BRL'
+const DEFAULT_DECIMALS = 2
+const DEFAULT_PRICES_WITH_TAX = false
 
 describe('Product Structured Data', () => {
   it('should fill low and high prices', () => {
@@ -15,7 +17,7 @@ describe('Product Structured Data', () => {
     product.items.push(cheapItem)
     product.items.push(expensiveItem)
 
-    const result = parseToJsonLD(product, product.items[0], currency)
+    const result = parseToJsonLD(product, product.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
 
     expect(result.offers.lowPrice).toBe(45)
     expect(result.offers.highPrice).toBe(60)
@@ -35,7 +37,7 @@ describe('Product Structured Data', () => {
 
     product.items.push(cheapItem)
 
-    const result = parseToJsonLD(product, product.items[0], currency)
+    const result = parseToJsonLD(product, product.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
 
     expect(result.offers.lowPrice).toBe(40)
     expect(result.offers.highPrice).toBe(45)
@@ -74,13 +76,17 @@ describe('Product Structured Data', () => {
     const resultOneSku = parseToJsonLD(
       productOneSku,
       productOneSku.items[0],
-      currency
+      currency,
+      DEFAULT_DECIMALS,
+      DEFAULT_PRICES_WITH_TAX
     )
 
     const resultTwoSkus = parseToJsonLD(
       productTwoSkus,
       productTwoSkus.items[0],
-      currency
+      currency,
+      DEFAULT_DECIMALS,
+      DEFAULT_PRICES_WITH_TAX
     )
 
     expect(resultOneSku).toBeNull()
@@ -91,7 +97,9 @@ describe('Product Structured Data', () => {
     const result = parseToJsonLD(
       mktPlaceProduct,
       mktPlaceProduct.items[0],
-      currency
+      currency,
+      DEFAULT_DECIMALS,
+      DEFAULT_PRICES_WITH_TAX
     )
 
     expect(result.offers.lowPrice).toBe(869900)
@@ -108,7 +116,7 @@ describe('Product Structured Data', () => {
     item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 
-    const result = parseToJsonLD(copyProduct, copyProduct.items[0], currency)
+    const result = parseToJsonLD(copyProduct, copyProduct.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
 
     expect(result.offers.lowPrice).toBe(1000)
     expect(result.offers.highPrice).toBe(955900)
