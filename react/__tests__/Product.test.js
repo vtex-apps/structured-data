@@ -17,7 +17,13 @@ describe('Product Structured Data', () => {
     product.items.push(cheapItem)
     product.items.push(expensiveItem)
 
-    const result = parseToJsonLD(product, product.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
+    const result = parseToJsonLD({
+      product,
+      selectedItem: product.items[0],
+      currency,
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(result.offers.lowPrice).toBe(45)
     expect(result.offers.highPrice).toBe(60)
@@ -37,7 +43,13 @@ describe('Product Structured Data', () => {
 
     product.items.push(cheapItem)
 
-    const result = parseToJsonLD(product, product.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
+    const result = parseToJsonLD({
+      product,
+      selectedItem: product.items[0],
+      currency,
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(result.offers.lowPrice).toBe(40)
     expect(result.offers.highPrice).toBe(45)
@@ -51,7 +63,13 @@ describe('Product Structured Data', () => {
     product.items.push(unavailableItem)
     product.items.push(availableItem)
 
-    const result = parseToJsonLD(product, product.items[0], currency)
+    const result = parseToJsonLD({
+      product,
+      selectedItem: product.items[0],
+      currency,
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(result.offers.lowPrice).toBe(60)
     expect(result.offers.highPrice).toBe(60)
@@ -73,34 +91,34 @@ describe('Product Structured Data', () => {
     productTwoSkus.items.push(unavailableItem)
     productTwoSkus.items.push(unavailableItem)
 
-    const resultOneSku = parseToJsonLD(
-      productOneSku,
-      productOneSku.items[0],
+    const resultOneSku = parseToJsonLD({
+      product: productOneSku,
+      selectedItem: productOneSku.items[0],
       currency,
-      DEFAULT_DECIMALS,
-      DEFAULT_PRICES_WITH_TAX
-    )
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
-    const resultTwoSkus = parseToJsonLD(
-      productTwoSkus,
-      productTwoSkus.items[0],
+    const resultTwoSkus = parseToJsonLD({
+      product: productTwoSkus,
+      selectedItem: productTwoSkus.items[0],
       currency,
-      DEFAULT_DECIMALS,
-      DEFAULT_PRICES_WITH_TAX
-    )
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(resultOneSku).toBeNull()
     expect(resultTwoSkus).toBeNull()
   })
 
   it('should handle multiple sellers correctly, get correct low price and high price', () => {
-    const result = parseToJsonLD(
-      mktPlaceProduct,
-      mktPlaceProduct.items[0],
+    const result = parseToJsonLD({
+      product: mktPlaceProduct,
+      selectedItem: mktPlaceProduct.items[0],
       currency,
-      DEFAULT_DECIMALS,
-      DEFAULT_PRICES_WITH_TAX
-    )
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(result.offers.lowPrice).toBe(869900)
     expect(result.offers.highPrice).toBe(955900)
@@ -116,7 +134,13 @@ describe('Product Structured Data', () => {
     item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 
-    const result = parseToJsonLD(copyProduct, copyProduct.items[0], currency, DEFAULT_DECIMALS, DEFAULT_PRICES_WITH_TAX)
+    const result = parseToJsonLD({
+      product: copyProduct,
+      selectedItem: copyProduct.items[0],
+      currency,
+      decimals: DEFAULT_DECIMALS,
+      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+    })
 
     expect(result.offers.lowPrice).toBe(1000)
     expect(result.offers.highPrice).toBe(955900)
