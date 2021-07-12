@@ -14,7 +14,26 @@
     "postreleasy": "vtex publish --verbose"
   },
   "dependencies": {
-    "vtex.render-runtime": "8.x"
+    "vtex.render-runtime": "8.x",
+    "vtex.apps-graphql": "2.x"
+  },
+  "settingsSchema": {
+    "title": "Structured data",
+    "type": "object",
+    "properties": {
+      "decimals": {
+        "title": "Number of decimals",
+        "type": "number",
+        "default": 2,
+        "description": "Set the number of decimals you want the prices to show"
+      },
+      "pricesWithTax": {
+        "title": "Prices with tax",
+        "type": "boolean",
+        "default": false,
+        "description": "Use the Price with Tax instead of spotPrice"
+      }
+    }
   },
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
 }
