@@ -7,7 +7,8 @@
   "defaultLocale": "pt-BR",
   "builders": {
     "react": "3.x",
-    "docs": "0.x"
+    "docs": "0.x",
+    "messages": "1.x"
   },
   "mustUpdateAt": "2019-08-29",
   "scripts": {
@@ -22,16 +23,16 @@
     "type": "object",
     "properties": {
       "decimals": {
-        "title": "Number of decimals",
+        "title": "admin/application-settings.decimals.title",
         "type": "number",
         "default": 2,
-        "description": "Set the number of decimals you want the prices to show"
+        "description": "admin/application-settings.decimals.description"
       },
       "pricesWithTax": {
-        "title": "Prices with tax",
+        "title": "admin/application-settings.prices-with-tax.title",
         "type": "boolean",
         "default": false,
-        "description": "Use the Price with Tax instead of spotPrice"
+        "description": "admin/application-settings.prices-with-tax.description"
       }
     }
   },
