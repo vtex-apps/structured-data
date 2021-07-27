@@ -5,34 +5,13 @@ import PropTypes from 'prop-types'
 // eslint-disable-next-line no-restricted-imports
 import { pathOr, path, sort, last, flatten } from 'ramda'
 import { jsonLdScriptProps } from 'react-schemaorg'
-import { useQuery } from 'react-apollo'
 
-import GET_SETTINGS from './queries/getSettings.graphql'
+import useAppSettings from './hooks/useAppSettings'
 
 const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
 const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
-const DEFAULT_DECIMALS = 2
-const DEFAULT_PRICES_WITH_TAX = false
-
-const AppSettings = () => {
-  const { data } = useQuery(GET_SETTINGS, { ssr: false })
-
-  if (!data) {
-    return {
-      decimals: DEFAULT_DECIMALS,
-      pricesWithTax: DEFAULT_PRICES_WITH_TAX,
-    }
-  }
-
-  const { decimals, pricesWithTax } = JSON.parse(data.appSettings.message)
-
-  return {
-    decimals,
-    pricesWithTax,
-  }
-}
 
 const getFinalPrice = (value, getPriceFunc, { decimals, pricesWithTax }) => {
   return pricesWithTax
@@ -197,7 +176,7 @@ function StructuredData({ product, selectedItem }) {
     culture: { currency },
   } = useRuntime()
 
-  const { decimals, pricesWithTax } = AppSettings()
+  const { decimals, pricesWithTax } = useAppSettings()
 
   const productLD = parseToJsonLD({
     product,
