@@ -7,13 +7,6 @@ import { product as mktPlaceProduct } from '../__fixtures__/marketplaceProductMo
 let mockDecimals = 2
 let mockPricesWithTax = false
 
-jest.mock('../hooks/useAppSettings', () => {
-  return jest.fn(() => ({
-    decimals: mockDecimals,
-    pricesWithTax: mockPricesWithTax,
-  }))
-})
-
 const currency = 'BRL'
 
 describe('Product Structured Data', () => {
