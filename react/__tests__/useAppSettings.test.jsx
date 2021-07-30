@@ -18,6 +18,19 @@ const mockQueryData = {
   },
 }
 
+const mockQueryDataNull = {
+  request: {
+    query: GET_SETTINGS,
+  },
+  result: {
+    data: {
+      appSettings: {
+        message: '{"decimals": null, "pricesWithTax": null}',
+      },
+    },
+  },
+}
+
 function getHookWrapper(mocks = []) {
   const wrapper = ({ children }) => (
     <MockedProvider addTypename={false} mocks={mocks}>
@@ -39,4 +52,13 @@ test('should return object', async () => {
 
   expect(result.current.decimals).toBe(2)
   expect(result.current.pricesWithTax).toBe(true)
+})
+
+test('should return default object', async () => {
+  const { result, waitForNextUpdate } = getHookWrapper([mockQueryDataNull])
+
+  await waitForNextUpdate()
+
+  expect(result.current.decimals).toBe(2)
+  expect(result.current.pricesWithTax).toBe(false)
 })

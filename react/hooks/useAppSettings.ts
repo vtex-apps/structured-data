@@ -23,7 +23,14 @@ const useAppSettings = (): Settings => {
     if (!loading) {
       const { decimals, pricesWithTax } = JSON.parse(data?.appSettings?.message)
 
-      if (decimals && pricesWithTax) setSettings({ decimals, pricesWithTax })
+      if (
+        decimals !== undefined &&
+        decimals !== null &&
+        pricesWithTax !== null &&
+        pricesWithTax !== undefined
+      ) {
+        setSettings({ decimals, pricesWithTax })
+      }
     }
   }, [loading, data])
 
