@@ -51,7 +51,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9849658Z',
             AvailableQuantity: 5,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -69,7 +69,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9613527Z',
             AvailableQuantity: 5,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -87,7 +87,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9593497Z',
             AvailableQuantity: 10,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -105,7 +105,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9559171Z',
             AvailableQuantity: 20,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -123,7 +123,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9502296Z',
             AvailableQuantity: 9,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -141,7 +141,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: '2020-09-20T19:47:56.9596485Z',
             AvailableQuantity: 9,
-            Tax: 0,
+            Tax: 19,
           },
         },
         {
@@ -159,7 +159,7 @@ export const product = {
             RewardValue: 0,
             PriceValidUntil: null,
             AvailableQuantity: 0,
-            Tax: 0,
+            Tax: 19,
           },
         },
       ],
