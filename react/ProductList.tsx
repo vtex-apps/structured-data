@@ -6,7 +6,7 @@ import { getBaseUrl } from './modules/baseUrl'
 
 interface Product {
   productName: string
-  linkText: string
+  link: string
 }
 
 interface Props {
@@ -24,7 +24,7 @@ export function getProductList(products?: Product[]) {
     '@type': 'ListItem',
     position: index + 1,
     name: product.productName,
-    url: `${baseUrl}/${product.linkText}`,
+    url: `${baseUrl}/${product.link}`,
   }))
 
   return {
