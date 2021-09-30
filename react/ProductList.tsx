@@ -6,6 +6,7 @@ import { getBaseUrl } from './modules/baseUrl'
 
 interface Product {
   productName: string
+  linkText: string
   link: string
 }
 
@@ -20,12 +21,15 @@ export function getProductList(products?: Product[]) {
 
   const baseUrl = getBaseUrl()
 
-  const productItems: ListItem[] = products.map((product, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    name: product.productName,
-    url: `${baseUrl}/${product.link}`,
-  }))
+  const productItems: ListItem[] = products.map((product, index) => {
+    const productUrl = `${baseUrl}/${product.link ?? `${product.linkText}/p`}`
+    return {
+      '@type': 'ListItem',
+      position: index + 1,
+      name: product.productName,
+      url: productUrl,
+    }
+  })
 
   return {
     '@context': 'https://schema.org',
