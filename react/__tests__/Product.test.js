@@ -196,4 +196,16 @@ describe('Product Structured Data', () => {
     expect(result.offers.offers[1].price).toBe(1019)
     expect(result.offers.offers[1].seller.name).toBe(item.sellers[2].sellerName)
   })
+
+  it('should have the relative path to product as @id', () => {
+    const copyProduct = clone(mktPlaceProduct)
+
+    const result = parseToJsonLD({
+      product: copyProduct,
+      selectedItem: copyProduct.items[0],
+      currency,
+    })
+
+    expect(result['@id']).toBe(`/${copyProduct.linkText}/p`)
+  })
 })
