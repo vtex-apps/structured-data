@@ -157,7 +157,7 @@ export const parseToJsonLD = ({
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
-    '@id': product.link,
+    '@id': `/${product.linkText}/p`,
     name,
     brand,
     image: image && image.imageUrl,
