@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Changed
-- Use the relative path to product page as id on Product schema.
+- Use the relative path to the product page as id on Product schema.
+
 ## [0.7.0] - 2021-08-05
 ### Added 
 - `settingsSchema` to allow stores to send `pricesWithTax` and specify the number of `decimals`
