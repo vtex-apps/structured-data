@@ -3,13 +3,26 @@ import { clone } from 'ramda'
 import { parseToJsonLD } from '../Product'
 import { createProduct, createItem } from '../__fixtures__/productMock'
 import { product as mktPlaceProduct } from '../__fixtures__/marketplaceProductMock'
+import * as getBaseUrl from '../modules/baseUrl'
 
 let mockDecimals = 2
 let mockPricesWithTax = false
+let mockGetBaseUrl
+const mockedBaseUrl = `www.vtex.com.br`
 
 const currency = 'BRL'
 
 describe('Product Structured Data', () => {
+  beforeAll(() => {
+    mockGetBaseUrl = jest
+      .spyOn(getBaseUrl, 'getBaseUrl')
+      .mockReturnValue(mockedBaseUrl)
+  })
+
+  afterAll(() => {
+    mockGetBaseUrl.mockRestore()
+  })
+
   it('should fill low and high prices', () => {
     const product = createProduct()
     const cheapItem = createItem({ id: '2', price: 45, quantity: 1 })
@@ -206,6 +219,6 @@ describe('Product Structured Data', () => {
       currency,
     })
 
-    expect(result['@id']).toBe(`/${copyProduct.linkText}/p`)
+    expect(result['@id']).toBe(`${mockedBaseUrl}/${copyProduct.linkText}/p`)
   })
 })
