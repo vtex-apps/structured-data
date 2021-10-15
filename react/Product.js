@@ -7,6 +7,7 @@ import { pathOr, path, sort, last, flatten } from 'ramda'
 import { jsonLdScriptProps } from 'react-schemaorg'
 
 import useAppSettings from './hooks/useAppSettings'
+import { getBaseUrl } from './modules/baseUrl'
 
 const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
@@ -154,10 +155,12 @@ export const parseToJsonLD = ({
     return null
   }
 
+  const baseUrl = getBaseUrl()
+
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
-    '@id': `/${product.linkText}/p`,
+    '@id': `${baseUrl}/${product.linkText}/p`,
     name,
     brand,
     image: image && image.imageUrl,
