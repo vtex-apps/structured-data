@@ -17,13 +17,17 @@ describe('Product List Structured Data', () => {
       '@type': 'ListItem',
       position: 1,
       name: products[0].productName,
-      url: `https://testSuite.com/${products[0].linkText}`,
+      url: `https://testSuite.com/${
+        products[0].link ?? products[0].linkText
+      }/p`,
     })
     expect(productListLD.itemListElement[1]).toEqual({
       '@type': 'ListItem',
       position: 2,
       name: products[1].productName,
-      url: `https://testSuite.com/${products[1].linkText}`,
+      url: `https://testSuite.com/${
+        products[1].link ?? products[1].linkText
+      }/p`,
     })
   })
 
