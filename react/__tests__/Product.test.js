@@ -210,7 +210,7 @@ describe('Product Structured Data', () => {
     expect(result.offers.offers[1].seller.name).toBe(item.sellers[2].sellerName)
   })
 
-  it('should have the product's final production URI as @id', () => {
+  it(`should have the product's final production URI as @id`, () => {
     const copyProduct = clone(mktPlaceProduct)
 
     const result = parseToJsonLD({
