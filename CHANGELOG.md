@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Use product's URI as @id on `Product` schema.
 
+## [0.7.1] - 2021-10-18
+### Fixed
+- add the /p parameter to the productList structured data URL
+
 ## [0.7.0] - 2021-08-05
 ### Added 
 - `settingsSchema` to allow stores to send `pricesWithTax` and specify the number of `decimals`
