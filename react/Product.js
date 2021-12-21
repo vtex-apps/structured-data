@@ -134,6 +134,13 @@ const getCategoryName = (product) =>
   product.categoryTree.length > 0 &&
   product.categoryTree[product.categoryTree.length - 1].name
 
+function parseBrand(brand) {
+  return {
+    '@type': brand.type,
+    name: brand.name,
+  }
+}
+
 export const parseToJsonLD = ({
   product,
   selectedItem,
@@ -159,7 +166,7 @@ export const parseToJsonLD = ({
     '@type': 'Product',
     '@id': product.link,
     name,
-    brand,
+    brand: parseBrand(brand),
     image: image && image.imageUrl,
     description: product.metaTagDescription,
     mpn: product.productId,
