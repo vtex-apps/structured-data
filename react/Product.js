@@ -136,8 +136,8 @@ const getCategoryName = (product) =>
 
 function parseBrand(brand) {
   return {
-    '@type': brand.type,
-    name: brand.name,
+    '@type': 'Brand',
+    name: typeof brand === 'string' ? brand : brand.name,
   }
 }
 
