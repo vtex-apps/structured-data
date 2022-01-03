@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "structured-data",
-  "version": "0.7.2",
+  "version": "0.7.3",
   "title": "Structure data",
   "description": "Structure data",
   "defaultLocale": "pt-BR",
