@@ -22,7 +22,7 @@ function SearchAction({ searchTermPath }: Props) {
           url: baseUrl,
           potentialAction: {
             '@type': 'SearchAction',
-            target: `${baseUrl}${path}{search_term_string}`,
+            target: `${baseUrl}${path}{search_term_string}?map=ft`,
             // @ts-expect-error it's a valid property
             'query-input': 'required name=search_term_string',
           },
