@@ -22,7 +22,7 @@ export function getProductList(products?: Product[]) {
   const baseUrl = getBaseUrl()
   const slash = baseUrl && baseUrl?.slice(-1) === '/' ? '' : '/'
   const productItems: ListItem[] = products.map((product, index) => {
-    let link = product.link ?? `${product.linkText}/p`
+    let link = `${product.linkText}/p`
     link = link.slice(0, 1) === '/' ? link.substring(1) : link
     const productUrl = `${baseUrl}${slash}${link}`
     return {
