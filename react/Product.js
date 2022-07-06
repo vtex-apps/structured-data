@@ -171,7 +171,7 @@ export const parseToJsonLD = ({
     name,
     brand: parseBrand(brand),
     image: image && image.imageUrl,
-    description: product.metaTagDescription,
+    description: product.metaTagDescription || product.description,
     mpn: product.productId,
     sku: selectedItem.itemId,
     category: getCategoryName(product),

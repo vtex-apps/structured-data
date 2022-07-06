@@ -7,12 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-## [0.8.1] - 2022-01-11
 ### Changed
+
+- Add full details of each product in `ProductList` component
+- Fall back to `product.description` if `product.metaTagDescription` is not present
+
+## [0.8.1] - 2022-01-11
+
+### Changed
+
 - Use product's URI as @id on `Product` schema.
 
 ## [0.8.0] - 2022-01-04
+
 ### Added
+
 - Added search parameter `?map=ft` to SearchAction's `potentialAction`
 
 ## [0.7.3] - 2022-01-03
@@ -28,11 +37,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - brand typo
 
 ## [0.7.1] - 2021-10-18
+
 ### Fixed
+
 - add the /p parameter to the productList structured data URL
 
 ## [0.7.0] - 2021-08-05
-### Added 
+
+### Added
+
 - `settingsSchema` to allow stores to send `pricesWithTax` and specify the number of `decimals`
 
 ## [0.6.2] - 2021-03-11
