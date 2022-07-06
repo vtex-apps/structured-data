@@ -45,3 +45,65 @@ describe('Product List Structured Data', () => {
     expect(productListLD).toBeNull()
   })
 })
+
+describe('double slash on product URLs', () => {
+  describe('when the baseURL has a trailing slash', () => {
+    beforeEach(() => {
+      global.__RUNTIME__ = {}
+      global.__hostname__ = 'testSuite.com/'
+    })
+  
+    it('does not create URLs with double slash', () => {
+      const products = createProductList()
+      const productListLD = getProductList(products)
+  
+      expect(productListLD.itemListElement[0].url).toEqual(
+        `https://testSuite.com/${
+          products[0].link ?? products[0].linkText
+        }/p`,
+      )
+      expect(productListLD.itemListElement[1].url).toEqual(
+        `https://testSuite.com/${
+          products[1].link ?? products[1].linkText
+        }/p`,
+      )
+    })
+  })
+
+  describe('when the product link has an opening slash', () => {
+    it('does not create URLs with double /', () => {
+      const products = createProductList()
+      products[0].linkText = '/blouse'
+      products[1].link = '/skirt/p'
+      const productListLD = getProductList(products)
+  
+      expect(productListLD.itemListElement[0].url).toEqual(
+        `https://testSuite.com/blouse/p`,
+      )
+      expect(productListLD.itemListElement[1].url).toEqual(
+        `https://testSuite.com/skirt/p`,
+      )
+    })
+  })
+
+  describe('when both the baseURL and the product link have opening slashes', () => {
+    beforeEach(() => {
+      global.__RUNTIME__ = {}
+      global.__hostname__ = 'testSuite.com/'
+    })
+    
+    it('does not create URLs with double /', () => {
+      const products = createProductList()
+      products[0].linkText = '/blouse'
+      products[1].link = '/skirt/p'
+      const productListLD = getProductList(products)
+  
+      expect(productListLD.itemListElement[0].url).toEqual(
+        `https://testSuite.com/blouse/p`,
+      )
+      expect(productListLD.itemListElement[1].url).toEqual(
+        `https://testSuite.com/skirt/p`,
+      )
+    })
+  })
+})

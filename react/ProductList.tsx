@@ -20,14 +20,17 @@ export function getProductList(products?: Product[]) {
   }
 
   const baseUrl = getBaseUrl()
+  const normalizedBaseUrl = baseUrl.endsWith('/') ? baseUrl.substring(0, baseUrl.length - 1) : baseUrl
 
   const productItems: ListItem[] = products.map((product, index) => {
-    const productUrl = `${baseUrl}/${product.link ?? `${product.linkText}/p`}`
+    let productPath : string = product.link ?? `${product.linkText}/p`
+    productPath = productPath.startsWith('/') ? productPath.substring(1) : productPath
+    
     return {
       '@type': 'ListItem',
       position: index + 1,
       name: product.productName,
-      url: productUrl,
+      url: `${normalizedBaseUrl}/${productPath}`,
     }
   })
 
