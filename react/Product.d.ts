@@ -33,8 +33,11 @@ export function parseToJsonLD({
     offerCount: any
   }
 }
+
 declare const _default: import('react').MemoExoticComponent<typeof StructuredData>
+
 export default _default
+
 declare function StructuredData({
   product,
   selectedItem,
@@ -42,6 +45,7 @@ declare function StructuredData({
   product: any
   selectedItem: any
 }): JSX.Element
+
 declare namespace StructuredData {
   namespace propTypes {
     const product: any
