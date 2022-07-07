@@ -10,7 +10,7 @@ interface Product {
   productName: string
   linkText: string
   link: string
-  items: any[]
+  items: unknown[]
 }
 
 interface Props {
