@@ -7,30 +7,30 @@ export function parseToJsonLD({
 }: {
   product: any
   selectedItem: any
-  currency: any
-  decimals: any
-  pricesWithTax: any
+  currency: string
+  decimals: number
+  pricesWithTax: boolean
 }): {
   '@context': string
   '@type': string
   '@id': string
-  name: any
+  name: string
   brand: {
     '@type': string
-    name: any
+    name: string
   }
-  image: any
-  description: any
-  mpn: any
-  sku: any
-  category: any
+  image: string
+  description: string
+  mpn: string
+  sku: number
+  category: string
   offers: {
     '@type': string
-    lowPrice: any
-    highPrice: any
-    priceCurrency: any
+    lowPrice: number
+    highPrice: number
+    priceCurrency: string
     offers: any
-    offerCount: any
+    offerCount: number
   }
 }
 
