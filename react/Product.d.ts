@@ -5,8 +5,8 @@ export function parseToJsonLD({
   decimals,
   pricesWithTax,
 }: {
-  product: any
-  selectedItem: any
+  product: unknown
+  selectedItem: unknown
   currency: string
   decimals: number
   pricesWithTax: boolean
@@ -29,7 +29,7 @@ export function parseToJsonLD({
     lowPrice: number
     highPrice: number
     priceCurrency: string
-    offers: any
+    offers: unknown
     offerCount: number
   }
 }
@@ -42,13 +42,13 @@ declare function StructuredData({
   product,
   selectedItem,
 }: {
-  product: any
-  selectedItem: any
+  product: unknown
+  selectedItem: unknown
 }): JSX.Element
 
 declare namespace StructuredData {
   namespace propTypes {
-    const product: any
-    const selectedItem: any
+    const product: unknown
+    const selectedItem: unknown
   }
 }
