@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.9.1] - 2022-07-08
+
 ### Fixed
 
 - Handle `null` seller in `parseSKUToOffer()`
