@@ -1,4 +1,8 @@
+import { createItem } from './productMock'
+
 export const createProductList = () => {
+  const item = createItem({ id: 1, price: 100, spotPrice: 100, quantity: 2 })
+
   return [
     {
       cacheId: 'blouse',
@@ -25,7 +29,7 @@ export const createProductList = () => {
           href: 'category-a/category-b/category-c',
         },
       ],
-      items: [],
+      items: [item],
     },
     {
       cacheId: 'skirt',
@@ -60,7 +64,7 @@ export const createProductList = () => {
           href: 'category-a/category-b/category-c',
         },
       ],
-      items: [],
+      items: [item],
     },
   ]
 }

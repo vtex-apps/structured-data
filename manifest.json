@@ -2,8 +2,8 @@
   "vendor": "vtex",
   "name": "structured-data",
   "version": "0.8.1",
-  "title": "Structure data",
-  "description": "Structure data",
+  "title": "Structured data",
+  "description": "Structured data",
   "defaultLocale": "pt-BR",
   "builders": {
     "react": "3.x",
@@ -23,16 +23,16 @@
     "type": "object",
     "properties": {
       "decimals": {
-        "title": "admin/application-settings.decimals.title",
+        "title": "Number of decimals",
         "type": "number",
         "default": 2,
-        "description": "admin/application-settings.decimals.description"
+        "description": "Set the number of decimals you want the prices to show"
       },
       "pricesWithTax": {
-        "title": "admin/application-settings.prices-with-tax.title",
+        "title": "Prices with tax",
         "type": "boolean",
         "default": false,
-        "description": "admin/application-settings.prices-with-tax.description"
+        "description": "Add tax to the price shown on Google"
       }
     }
   },

@@ -9,5 +9,6 @@
     "moduleResolution": "node",
     "target": "es2017"
   },
-  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts"]
+  "include": ["./typings/*.d.ts", "./**/*.tsx", "./**/*.ts", "Product.js"],
+  "exclude": ["node_modules"]
 }
