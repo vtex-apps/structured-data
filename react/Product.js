@@ -85,7 +85,7 @@ const parseSKUToOffer = (item, currency, { decimals, pricesWithTax }) => {
     priceValidUntil: path(['commertialOffer', 'PriceValidUntil'], seller),
     seller: {
       '@type': 'Organization',
-      name: seller.sellerName,
+      name: seller ? seller.sellerName : '',
     },
   }
 
