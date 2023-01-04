@@ -20,11 +20,13 @@ interface Props {
 export function getProductList({
   decimals,
   pricesWithTax,
+  pricesHidden,
   currency,
   products,
 }: {
   decimals: number
   pricesWithTax: boolean
+  pricesHidden: boolean
   currency: string
   products?: Product[]
 }) {
@@ -40,6 +42,7 @@ export function getProductList({
       currency,
       decimals,
       pricesWithTax,
+      pricesHidden,
     })
 
     return {
@@ -61,10 +64,11 @@ function ProductList({ products }: Props) {
     culture: { currency },
   } = useRuntime()
 
-  const { decimals, pricesWithTax } = useAppSettings()
+  const { decimals, pricesWithTax, pricesHidden } = useAppSettings()
   const productListLD: WithContext<ItemList> | null = getProductList({
     decimals,
     pricesWithTax,
+    pricesHidden,
     currency,
     products,
   })

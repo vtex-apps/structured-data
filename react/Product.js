@@ -14,7 +14,15 @@ const getPrice = path(['commertialOffer', 'Price'])
 const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
 
-const getFinalPrice = (value, getPriceFunc, { decimals, pricesWithTax }) => {
+const getFinalPrice = (
+  value,
+  getPriceFunc,
+  { decimals, pricesWithTax, pricesHidden }
+) => {
+  if (pricesHidden) {
+    return 0
+  }
+
   return pricesWithTax
     ? Math.round(
         (getPriceFunc(value) + getTax(value) + Number.EPSILON) * 10 ** decimals
@@ -60,12 +68,20 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const parseSKUToOffer = (item, currency, { decimals, pricesWithTax }) => {
+const parseSKUToOffer = (
+  item,
+  currency,
+  { decimals, pricesWithTax, pricesHidden }
+) => {
   const { low: seller } = lowHighForSellers(item.sellers, { pricesWithTax })
 
   const availability = getSKUAvailabilityString(seller)
 
-  const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
+  const price = getFinalPrice(seller, getSpotPrice, {
+    decimals,
+    pricesWithTax,
+    pricesHidden,
+  })
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -102,15 +118,27 @@ const getAllSellers = (items) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax }
+  { decimals, pricesWithTax, pricesHidden }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
   const { low, high } = lowHighForSellers(allSellers, { pricesWithTax })
 
+  const lowPrice = pricesHidden
+    ? 0
+    : getFinalPrice(low, getSpotPrice, { decimals, pricesWithTax })
+
+  const highPrice = pricesHidden
+    ? 0
+    : getFinalPrice(high, getPrice, { decimals, pricesWithTax })
+
   const offersList = items
     .map((element) =>
-      parseSKUToOffer(element, currency, { decimals, pricesWithTax })
+      parseSKUToOffer(element, currency, {
+        decimals,
+        pricesWithTax,
+        pricesHidden,
+      })
     )
     .filter(Boolean)
 
@@ -120,8 +148,8 @@ const composeAggregateOffer = (
 
   const aggregateOffer = {
     '@type': 'AggregateOffer',
-    lowPrice: getFinalPrice(low, getSpotPrice, { decimals, pricesWithTax }),
-    highPrice: getFinalPrice(high, getPrice, { decimals, pricesWithTax }),
+    lowPrice,
+    highPrice,
     priceCurrency: currency,
     offers: offersList,
     offerCount: items.length,
@@ -148,6 +176,7 @@ export const parseToJsonLD = ({
   currency,
   decimals,
   pricesWithTax,
+  pricesHidden,
 }) => {
   const [image] = selectedItem ? selectedItem.images : []
   const { brand } = product
@@ -156,6 +185,7 @@ export const parseToJsonLD = ({
   const offers = composeAggregateOffer(product, currency, {
     decimals,
     pricesWithTax,
+    pricesHidden,
   })
 
   if (offers === null) {
@@ -186,7 +216,7 @@ function StructuredData({ product, selectedItem }) {
     culture: { currency },
   } = useRuntime()
 
-  const { decimals, pricesWithTax } = useAppSettings()
+  const { decimals, pricesWithTax, pricesHidden } = useAppSettings()
 
   const productLD = parseToJsonLD({
     product,
@@ -194,6 +224,7 @@ function StructuredData({ product, selectedItem }) {
     currency,
     decimals,
     pricesWithTax,
+    pricesHidden,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />

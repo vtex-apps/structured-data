@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- `settingsSchema` to allow stores to send `pricesHidden` and specify if prices should be send
+
 ## [0.9.1] - 2022-07-08
 
 ### Fixed

@@ -4,12 +4,14 @@ export function parseToJsonLD({
   currency,
   decimals,
   pricesWithTax,
+  pricesHidden,
 }: {
   product: unknown
   selectedItem: unknown
   currency: string
   decimals: number
   pricesWithTax: boolean
+  pricesHidden: boolean
 }): {
   '@context': string
   '@type': string

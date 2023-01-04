@@ -33,6 +33,12 @@
         "type": "boolean",
         "default": false,
         "description": "Add tax to the price shown on Google"
+      },
+      "pricesHidden": {
+        "title": "Prices Hidden",
+        "type": "boolean",
+        "default": false,
+        "description": "Hide prices shown on Google"
       }
     }
   },
