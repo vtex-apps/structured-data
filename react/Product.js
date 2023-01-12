@@ -188,9 +188,6 @@ function StructuredData({ product, selectedItem }) {
 
   const { decimals, pricesWithTax } = useAppSettings()
 
-  console.log(`Decimals: ${decimals}`)
-  console.log(`price tax: ${pricesWithTax}`)
-
   const productLD = parseToJsonLD({
     product,
     selectedItem,
