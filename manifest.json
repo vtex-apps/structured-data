@@ -8,7 +8,9 @@
   "builders": {
     "react": "3.x",
     "docs": "0.x",
-    "messages": "1.x"
+    "messages": "1.x",
+    "node": "6.x",
+    "graphql": "1.x"
   },
   "mustUpdateAt": "2019-08-29",
   "scripts": {

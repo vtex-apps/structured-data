@@ -20,8 +20,8 @@ const useAppSettings = (): Settings => {
   const { data, loading } = useQuery(GET_SETTINGS, { ssr: false })
 
   useEffect(() => {
-    if (!loading && data?.appSettings?.message) {
-      const { decimals, pricesWithTax } = JSON.parse(data.appSettings.message)
+    if (!loading && data?.appSettings) {
+      const { decimals, pricesWithTax } = data.appSettings
 
       if (
         decimals !== undefined &&
