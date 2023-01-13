@@ -9,12 +9,15 @@ interface Settings {
 
 const useAppSettings = (): Settings => {
   const { data } = useQuery(GET_SETTINGS, { ssr: false })
+  let decimals = 2
+  let pricesWithTax = false
 
   if (data?.appSettings) {
-    return data.appSettings
+    decimals = data.appSettings.decimals ?? decimals
+    pricesWithTax = data.appSettings.pricesWithTax ?? pricesWithTax
   }
 
-  return { decimals: 2, pricesWithTax: false }
+  return { decimals, pricesWithTax }
 }
 
 export default useAppSettings
