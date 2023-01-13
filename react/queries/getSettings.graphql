@@ -1,6 +1,6 @@
 query getSettings {
-  appSettings(app: "vtex.structured-data", version: "0.x")
-    @context(provider: "vtex.apps-graphql") {
-    message
+  appSettings @context(provider: "vtex.structured-data") {
+    decimals
+    pricesWithTax
   }
 }
