@@ -27,7 +27,8 @@
         "title": "Number of decimals",
         "type": "number",
         "default": 2,
-        "description": "Set the number of decimals you want the prices to show"
+        "description": "Set the number of decimals you want the prices to show",
+        "access": "public"
       },
       "pricesWithTax": {
         "title": "Prices with tax",
