@@ -12,8 +12,10 @@ const mockQueryData = {
   result: {
     data: {
       appSettings: {
-        decimals: 2,
-        pricesWithTax: true,
+        message: {
+          decimals: 2,
+          pricesWithTax: true,
+        },
       },
     },
   },
@@ -26,8 +28,10 @@ const mockQueryDataNull = {
   result: {
     data: {
       appSettings: {
-        decimals: null,
-        pricesWithTax: null,
+        message: {
+          decimals: null,
+          pricesWithTax: null,
+        },
       },
     },
   },
