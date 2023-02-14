@@ -21,6 +21,7 @@
   "settingsSchema": {
     "title": "Structured data",
     "type": "object",
+    "access": "public",
     "properties": {
       "decimals": {
         "title": "Number of decimals",
