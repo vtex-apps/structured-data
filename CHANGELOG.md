@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+
+- Uses `publicSettingsForApp` endpoint to retrieve app settings
+
 ## [0.9.2] - 2023-01-13
 
 ### Changed
