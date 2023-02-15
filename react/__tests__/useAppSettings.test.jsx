@@ -11,9 +11,8 @@ const mockQueryData = {
   },
   result: {
     data: {
-      appSettings: {
-        decimals: 2,
-        pricesWithTax: true,
+      publicSettingsForApp: {
+        message: '{"decimals": 4, "pricesWithTax": true}',
       },
     },
   },
@@ -25,9 +24,8 @@ const mockQueryDataNull = {
   },
   result: {
     data: {
-      appSettings: {
-        decimals: null,
-        pricesWithTax: null,
+      publicSettingsForApp: {
+        message: '{"decimals": null, "pricesWithTax": null}',
       },
     },
   },
@@ -52,7 +50,7 @@ test('should return object', async () => {
 
   await waitForNextUpdate()
 
-  expect(result.current.decimals).toBe(2)
+  expect(result.current.decimals).toBe(4)
   expect(result.current.pricesWithTax).toBe(true)
 })
 
