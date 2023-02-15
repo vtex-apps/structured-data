@@ -14,14 +14,13 @@ const useAppSettings = (): Settings => {
   const { data } = useQuery(GET_SETTINGS, { ssr: false })
 
   if (data?.publicSettingsForApp?.message) {
-    const {
-      decimals = DEFAULT_DECIMALS,
-      pricesWithTax = DEFAULT_PRICES_WITH_TAX,
-    } = JSON.parse(data.publicSettingsForApp.message)
+    const { decimals, pricesWithTax } = JSON.parse(
+      data.publicSettingsForApp.message
+    )
 
     return {
-      decimals,
-      pricesWithTax,
+      decimals: decimals || DEFAULT_DECIMALS,
+      pricesWithTax: pricesWithTax || DEFAULT_PRICES_WITH_TAX,
     }
   }
 
