@@ -1,5 +1,4 @@
 import { useQuery } from 'react-apollo'
-import { useEffect, useState } from 'react'
 
 import GET_SETTINGS from '../queries/getSettings.graphql'
 
@@ -12,31 +11,24 @@ interface Settings {
 }
 
 const useAppSettings = (): Settings => {
-  const [settings, setSettings] = useState<Settings>({
+  const { data } = useQuery(GET_SETTINGS, { ssr: false })
+
+  if (data?.publicSettingsForApp?.message) {
+    const {
+      decimals = DEFAULT_DECIMALS,
+      pricesWithTax = DEFAULT_PRICES_WITH_TAX,
+    } = JSON.parse(data.publicSettingsForApp.message)
+
+    return {
+      decimals,
+      pricesWithTax,
+    }
+  }
+
+  return {
     decimals: DEFAULT_DECIMALS,
     pricesWithTax: DEFAULT_PRICES_WITH_TAX,
-  })
-
-  const { data, loading } = useQuery(GET_SETTINGS, { ssr: false })
-
-  useEffect(() => {
-    if (!loading && data?.publicSettingsForApp?.message) {
-      const { decimals, pricesWithTax } = JSON.parse(
-        data.publicSettingsForApp.message
-      )
-
-      if (
-        decimals !== undefined &&
-        decimals !== null &&
-        pricesWithTax !== null &&
-        pricesWithTax !== undefined
-      ) {
-        setSettings({ decimals, pricesWithTax })
-      }
-    }
-  }, [loading, data])
-
-  return settings
+  }
 }
 
 export default useAppSettings
