@@ -2,6 +2,9 @@ import { useQuery } from 'react-apollo'
 
 import GET_SETTINGS from '../queries/getSettings.graphql'
 
+const DEFAULT_DECIMALS = 2
+const DEFAULT_PRICES_WITH_TAX = false
+
 interface Settings {
   decimals: number
   pricesWithTax: boolean
@@ -10,17 +13,22 @@ interface Settings {
 
 const useAppSettings = (): Settings => {
   const { data } = useQuery(GET_SETTINGS, { ssr: false })
-  let decimals = 2
-  let pricesWithTax = false
-  let useSellerDefault = false
 
-  if (data?.appSettings) {
-    decimals = data.appSettings.decimals ?? decimals
-    pricesWithTax = data.appSettings.pricesWithTax ?? pricesWithTax
-    useSellerDefault = data.appSettings.useSellerDefault ?? useSellerDefault
+  if (data?.publicSettingsForApp?.message) {
+    const { decimals, pricesWithTax } = JSON.parse(
+      data.publicSettingsForApp.message
+    )
+
+    return {
+      decimals: decimals || DEFAULT_DECIMALS,
+      pricesWithTax: pricesWithTax || DEFAULT_PRICES_WITH_TAX,
+    }
   }
 
-  return { decimals, pricesWithTax, useSellerDefault }
+  return {
+    decimals: DEFAULT_DECIMALS,
+    pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+  }
 }
 
 export default useAppSettings

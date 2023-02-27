@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.10.0] - 2023-02-15
+
 ### Changed
 
-- Add `useSellerDefault` to the app settings;
+- Uses `publicSettingsForApp` endpoint to retrieve app settings
 
 ## [0.9.2] - 2023-01-13
 

@@ -1,27 +1,27 @@
 {
   "vendor": "vtex",
   "name": "structured-data",
-  "version": "0.9.2",
+  "version": "0.10.0",
   "title": "Structured data",
   "description": "Structured data",
   "defaultLocale": "pt-BR",
   "builders": {
     "react": "3.x",
     "docs": "0.x",
-    "messages": "1.x",
-    "node": "6.x",
-    "graphql": "1.x"
+    "messages": "1.x"
   },
   "mustUpdateAt": "2019-08-29",
   "scripts": {
     "postreleasy": "vtex publish --verbose"
   },
   "dependencies": {
-    "vtex.render-runtime": "8.x"
+    "vtex.render-runtime": "8.x",
+    "vtex.apps-graphql": "3.x"
   },
   "settingsSchema": {
     "title": "Structured data",
     "type": "object",
+    "access": "public",
     "properties": {
       "decimals": {
         "title": "Number of decimals",

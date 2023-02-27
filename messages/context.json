@@ -1,6 +1,0 @@
-{
-  "admin/application-settings.decimals.title": "Number of decimals",
-  "admin/application-settings.prices-with-tax.title": "Prices with tax",
-  "admin/application-settings.decimals.description": "Set the number of decimals you want the prices to show",
-  "admin/application-settings.prices-with-tax.description": "Add tax to the price shown on Google"
-}
