@@ -1,9 +1,0 @@
-type Settings {
-  decimals: Int
-  pricesWithTax: Boolean
-  useSellerDefault: Boolean
-}
-
-type Query {
-  appSettings: Settings @cacheControl(scope: PUBLIC, maxAge: MEDIUM)
-}
