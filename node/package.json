@@ -4,7 +4,7 @@
     "typescript": "3.9.7"
   },
   "dependencies": {
-    "@vtex/api": "6.45.13"
+    "@vtex/api": "6.45.15"
   },
   "resolutions": {
     "@types/express-serve-static-core": "4.17.18"

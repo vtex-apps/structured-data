@@ -1,6 +1,7 @@
 type Settings {
   decimals: Int
   pricesWithTax: Boolean
+  useSellerDefault: Boolean
 }
 
 type Query {
