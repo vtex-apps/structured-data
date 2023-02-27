@@ -228,7 +228,7 @@ describe('Product Structured Data', () => {
 
     const item = copyProduct.items[0]
 
-    item.sellers.forEach(seller => {
+    item.sellers.forEach((seller) => {
       seller.sellerDefault = seller.sellerId === '11829'
     })
 

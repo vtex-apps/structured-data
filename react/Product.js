@@ -60,7 +60,11 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const parseSKUToOffer = (item, currency, { decimals, pricesWithTax, useSellerDefault }) => {
+const parseSKUToOffer = (
+  item,
+  currency,
+  { decimals, pricesWithTax, useSellerDefault }
+) => {
   const { low } = lowHighForSellers(item.sellers, { pricesWithTax })
 
   const seller = useSellerDefault ? getSellerDefault(item.sellers) : low
@@ -118,7 +122,11 @@ const composeAggregateOffer = (
 
   const offersList = items
     .map((element) =>
-      parseSKUToOffer(element, currency, { decimals, pricesWithTax, useSellerDefault })
+      parseSKUToOffer(element, currency, {
+        decimals,
+        pricesWithTax,
+        useSellerDefault,
+      })
     )
     .filter(Boolean)
 

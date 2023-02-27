@@ -31,13 +31,13 @@ export function parseToJsonLD({
     lowPrice: number
     highPrice: number
     priceCurrency: string
-    offers: {
+    offers: Array<{
       '@type': string
       seller: {
         '@type': string
         name: string
       }
-    }[]
+    }>
     offerCount: number
   }
 }
