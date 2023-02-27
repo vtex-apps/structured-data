@@ -48,6 +48,7 @@ export const createItem = ({
       {
         sellerId: id,
         sellerName: 'Store Name',
+        sellerDefault: true,
         commertialOffer: {
           AvailableQuantity: quantity,
           ListPrice: price + 10,

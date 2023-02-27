@@ -4,12 +4,14 @@ export function parseToJsonLD({
   currency,
   decimals,
   pricesWithTax,
+  userSellerDefault,
 }: {
   product: unknown
   selectedItem: unknown
   currency: string
   decimals: number
   pricesWithTax: boolean
+  userSellerDefault?: boolean
 }): {
   '@context': string
   '@type': string
@@ -29,7 +31,13 @@ export function parseToJsonLD({
     lowPrice: number
     highPrice: number
     priceCurrency: string
-    offers: unknown
+    offers: {
+      '@type': string
+      seller: {
+        '@type': string
+        name: string
+      }
+    }[]
     offerCount: number
   }
 }

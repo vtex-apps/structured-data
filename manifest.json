@@ -34,6 +34,12 @@
         "type": "boolean",
         "default": false,
         "description": "Add tax to the price shown on Google"
+      },
+      "useSellerDefault": {
+        "title": "Use seller default",
+        "type": "boolean",
+        "default": false,
+        "description": "Use seller default price in AggregateOffer"
       }
     }
   },
