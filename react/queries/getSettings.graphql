@@ -2,5 +2,6 @@ query getSettings {
   appSettings @context(provider: "vtex.structured-data") {
     decimals
     pricesWithTax
+    useSellerDefault
   }
 }

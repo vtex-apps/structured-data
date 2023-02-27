@@ -14,6 +14,7 @@ const mockQueryData = {
       appSettings: {
         decimals: 2,
         pricesWithTax: true,
+        useSellerDefault: true
       },
     },
   },
@@ -28,6 +29,7 @@ const mockQueryDataNull = {
       appSettings: {
         decimals: null,
         pricesWithTax: null,
+        useSellerDefault: null
       },
     },
   },
@@ -54,6 +56,7 @@ test('should return object', async () => {
 
   expect(result.current.decimals).toBe(2)
   expect(result.current.pricesWithTax).toBe(true)
+  expect(result.current.useSellerDefault).toBe(true)
 })
 
 test('should return default object', async () => {
@@ -63,4 +66,5 @@ test('should return default object', async () => {
 
   expect(result.current.decimals).toBe(2)
   expect(result.current.pricesWithTax).toBe(false)
+  expect(result.current.useSellerDefault).toBe(false)
 })
