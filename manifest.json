@@ -27,7 +27,7 @@
         "title": "Disable Offers",
         "type": "boolean",
         "default": false,
-        "description": "Disable product offers shown on Google"
+        "description": "Disable product offers"
       },
       "decimals": {
         "title": "Number of decimals",
