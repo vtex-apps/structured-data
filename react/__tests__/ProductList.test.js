@@ -1,6 +1,7 @@
 import { getProductList } from '../ProductList'
 import { createProductList } from '../__fixtures__/productListMock'
 
+const disableOffers = false
 const decimals = 2
 const pricesWithTax = false
 const currency = 'USD'
@@ -17,6 +18,7 @@ describe('Product List Structured Data', () => {
     const productListLD = getProductList({
       products,
       decimals,
+      disableOffers,
       pricesWithTax,
       currency,
     })
@@ -118,6 +120,7 @@ describe('Product List Structured Data', () => {
     const productListLD = getProductList({
       products,
       decimals,
+      disableOffers,
       pricesWithTax,
       currency,
     })
@@ -130,10 +133,27 @@ describe('Product List Structured Data', () => {
     const productListLD = getProductList({
       products,
       decimals,
+      disableOffers,
       pricesWithTax,
       currency,
     })
 
     expect(productListLD).toBeNull()
+  })
+
+  it('should not fill offers if disableOffers is true', () => {
+    const products = createProductList()
+
+    const productListLD = getProductList({
+      products,
+      decimals,
+      disableOffers: true,
+      pricesWithTax,
+      currency,
+    })
+
+    expect(productListLD['@type']).toBe('ItemList')
+    expect(productListLD.itemListElement).toHaveLength(2)
+    expect(productListLD.itemListElement[0].item.offers).toBeNull()
   })
 })

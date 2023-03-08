@@ -23,6 +23,12 @@
     "type": "object",
     "access": "public",
     "properties": {
+      "disableOffers": {
+        "title": "Disable Offers",
+        "type": "boolean",
+        "default": false,
+        "description": "Disable product offers shown on Google"
+      },
       "decimals": {
         "title": "Number of decimals",
         "type": "number",

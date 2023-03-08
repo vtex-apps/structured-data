@@ -12,7 +12,8 @@ const mockQueryData = {
   result: {
     data: {
       publicSettingsForApp: {
-        message: '{"decimals": 4, "pricesWithTax": true}',
+        message:
+          '{"disableOffers": false, "decimals": 4, "pricesWithTax": true}',
       },
     },
   },
@@ -25,7 +26,8 @@ const mockQueryDataNull = {
   result: {
     data: {
       publicSettingsForApp: {
-        message: '{"decimals": null, "pricesWithTax": null}',
+        message:
+          '{"disableOffers": null, "decimals": null, "pricesWithTax": null}',
       },
     },
   },
@@ -50,6 +52,7 @@ test('should return object', async () => {
 
   await waitForNextUpdate()
 
+  expect(result.current.disableOffers).toBe(false)
   expect(result.current.decimals).toBe(4)
   expect(result.current.pricesWithTax).toBe(true)
 })
@@ -59,6 +62,7 @@ test('should return default object', async () => {
 
   await waitForNextUpdate()
 
+  expect(result.current.disableOffers).toBe(false)
   expect(result.current.decimals).toBe(2)
   expect(result.current.pricesWithTax).toBe(false)
 })
