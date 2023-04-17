@@ -31,5 +31,5 @@
     "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.132.4/public/@types/vtex.render-runtime",
     "vtex.structured-data": "https://disableoffers--acctglobal.myvtex.com/_v/private/typings/linked/v1/vtex.structured-data@0.10.0+build1678125175/public/@types/vtex.structured-data"
   },
-  "version": "0.10.0"
+  "version": "0.11.0"
 }
