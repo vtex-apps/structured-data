@@ -5,6 +5,7 @@ import { createProduct, createItem } from '../__fixtures__/productMock'
 import { product as mktPlaceProduct } from '../__fixtures__/marketplaceProductMock'
 import * as getBaseUrl from '../modules/baseUrl'
 
+let mockDisableOffers = false
 let mockDecimals = 2
 let mockPricesWithTax = false
 let mockGetBaseUrl
@@ -28,6 +29,7 @@ describe('Product Structured Data', () => {
     const cheapItem = createItem({ id: '2', price: 45, quantity: 1 })
     const expensiveItem = createItem({ id: '3', price: 60, quantity: 2 })
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -38,6 +40,7 @@ describe('Product Structured Data', () => {
       product,
       selectedItem: product.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -60,6 +63,7 @@ describe('Product Structured Data', () => {
 
     product.items.push(cheapItem)
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -67,6 +71,7 @@ describe('Product Structured Data', () => {
       product,
       selectedItem: product.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -83,6 +88,7 @@ describe('Product Structured Data', () => {
     product.items.push(unavailableItem)
     product.items.push(availableItem)
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -90,6 +96,7 @@ describe('Product Structured Data', () => {
       product,
       selectedItem: product.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -114,6 +121,7 @@ describe('Product Structured Data', () => {
     productTwoSkus.items.push(unavailableItem)
     productTwoSkus.items.push(unavailableItem)
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -121,6 +129,7 @@ describe('Product Structured Data', () => {
       product: productOneSku,
       selectedItem: productOneSku.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -129,6 +138,7 @@ describe('Product Structured Data', () => {
       product: productTwoSkus,
       selectedItem: productTwoSkus.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -138,6 +148,7 @@ describe('Product Structured Data', () => {
   })
 
   it('should handle multiple sellers correctly, get correct low price and high price', () => {
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -145,6 +156,7 @@ describe('Product Structured Data', () => {
       product: mktPlaceProduct,
       selectedItem: mktPlaceProduct.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -163,6 +175,7 @@ describe('Product Structured Data', () => {
     item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = false
 
@@ -170,6 +183,7 @@ describe('Product Structured Data', () => {
       product: copyProduct,
       selectedItem: copyProduct.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -190,6 +204,7 @@ describe('Product Structured Data', () => {
     item.sellers[2].commertialOffer.spotPrice = 1000
     copyProduct.items.push(item)
 
+    mockDisableOffers = false
     mockDecimals = 2
     mockPricesWithTax = true
 
@@ -197,6 +212,7 @@ describe('Product Structured Data', () => {
       product: copyProduct,
       selectedItem: copyProduct.items[0],
       currency,
+      disableOffers: mockDisableOffers,
       decimals: mockDecimals,
       pricesWithTax: mockPricesWithTax,
     })
@@ -220,5 +236,24 @@ describe('Product Structured Data', () => {
     })
 
     expect(result['@id']).toBe(`${mockedBaseUrl}/${copyProduct.linkText}/p`)
+  })
+
+  it('should not fill offers if disableOffers is true', () => {
+    const copyProduct = clone(mktPlaceProduct)
+
+    mockDisableOffers = true
+    mockDecimals = 2
+    mockPricesWithTax = false
+
+    const result = parseToJsonLD({
+      product: copyProduct,
+      selectedItem: copyProduct.items[0],
+      currency,
+      disableOffers: mockDisableOffers,
+      decimals: mockDecimals,
+      pricesWithTax: mockPricesWithTax,
+    })
+
+    expect(result.offers).toBeNull()
   })
 })
