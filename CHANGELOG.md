@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Adds `useSellerDefault` to the app settings
 
+## [0.11.0] - 2023-04-17
+
+### Added
+
+- Add new `settingsSchema` option `disableOffers` to fill `offers` as null when enabled
+
 ## [0.10.0] - 2023-02-15
 
 ### Changed

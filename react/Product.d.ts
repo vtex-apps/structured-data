@@ -2,6 +2,7 @@ export function parseToJsonLD({
   product,
   selectedItem,
   currency,
+  disableOffers,
   decimals,
   pricesWithTax,
   userSellerDefault,
@@ -9,6 +10,7 @@ export function parseToJsonLD({
   product: unknown
   selectedItem: unknown
   currency: string
+  disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
   userSellerDefault?: boolean

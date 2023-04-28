@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "structured-data",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "title": "Structured data",
   "description": "Structured data",
   "defaultLocale": "pt-BR",
@@ -23,6 +23,12 @@
     "type": "object",
     "access": "public",
     "properties": {
+      "disableOffers": {
+        "title": "Disable Offers",
+        "type": "boolean",
+        "default": false,
+        "description": "Disable product offers"
+      },
       "decimals": {
         "title": "Number of decimals",
         "type": "number",

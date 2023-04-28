@@ -18,11 +18,13 @@ interface Props {
 }
 
 export function getProductList({
+  disableOffers,
   decimals,
   pricesWithTax,
   currency,
   products,
 }: {
+  disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
   currency: string
@@ -38,6 +40,7 @@ export function getProductList({
       product,
       selectedItem,
       currency,
+      disableOffers,
       decimals,
       pricesWithTax,
     })
@@ -61,8 +64,9 @@ function ProductList({ products }: Props) {
     culture: { currency },
   } = useRuntime()
 
-  const { decimals, pricesWithTax } = useAppSettings()
+  const { disableOffers, decimals, pricesWithTax } = useAppSettings()
   const productListLD: WithContext<ItemList> | null = getProductList({
+    disableOffers,
     decimals,
     pricesWithTax,
     currency,

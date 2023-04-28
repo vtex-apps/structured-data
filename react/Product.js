@@ -160,6 +160,7 @@ export const parseToJsonLD = ({
   product,
   selectedItem,
   currency,
+  disableOffers,
   decimals,
   pricesWithTax,
   useSellerDefault,
@@ -191,7 +192,7 @@ export const parseToJsonLD = ({
     mpn: product.productId,
     sku: selectedItem && selectedItem.itemId,
     category: getCategoryName(product),
-    offers,
+    offers: disableOffers ? null : offers,
   }
 
   return productLD
@@ -202,12 +203,15 @@ function StructuredData({ product, selectedItem }) {
     culture: { currency },
   } = useRuntime()
 
-  const { decimals, pricesWithTax, useSellerDefault } = useAppSettings()
+
+  const { decimals, disableOffers, pricesWithTax, useSellerDefault } = useAppSettings()
+
 
   const productLD = parseToJsonLD({
     product,
     selectedItem,
     currency,
+    disableOffers,
     decimals,
     pricesWithTax,
     useSellerDefault,
