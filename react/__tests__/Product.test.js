@@ -239,11 +239,10 @@ describe('Product Structured Data', () => {
     expect(result['@id']).toBe(`${mockedBaseUrl}/${copyProduct.linkText}/p`)
   })
 
-
   it('should handle multiple sellers and option useSellerDefault, get correct seller name and price', () => {
     const copyProduct = clone(mktPlaceProduct)
 
-    const item = copyProduct.items[0]
+    const [item] = copyProduct.items
 
     item.sellers.forEach((seller) => {
       seller.sellerDefault = seller.sellerId === '11829'
@@ -264,6 +263,7 @@ describe('Product Structured Data', () => {
 
     expect(result.offers.offers[0].seller.name).toBe('multisistemas')
     expect(result.offers.offers[0].price).toBe(899000)
+  })
 
   it('should not fill offers if disableOffers is true', () => {
     const copyProduct = clone(mktPlaceProduct)

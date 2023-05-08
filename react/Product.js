@@ -65,7 +65,9 @@ const parseSKUToOffer = (
   currency,
   { decimals, pricesWithTax, useSellerDefault }
 ) => {
-  const seller = useSellerDefault ? getSellerDefault(item.sellers) : lowHighForSellers(item.sellers, { pricesWithTax }).low
+  const seller = useSellerDefault
+    ? getSellerDefault(item.sellers)
+    : lowHighForSellers(item.sellers, { pricesWithTax }).low
 
   const availability = getSKUAvailabilityString(seller)
 
@@ -203,9 +205,12 @@ function StructuredData({ product, selectedItem }) {
     culture: { currency },
   } = useRuntime()
 
-
-  const { decimals, disableOffers, pricesWithTax, useSellerDefault } = useAppSettings()
-
+  const {
+    decimals,
+    disableOffers,
+    pricesWithTax,
+    useSellerDefault,
+  } = useAppSettings()
 
   const productLD = parseToJsonLD({
     product,

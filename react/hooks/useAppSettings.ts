@@ -18,9 +18,12 @@ const useAppSettings = (): Settings => {
   const { data } = useQuery(GET_SETTINGS, { ssr: false })
 
   if (data?.publicSettingsForApp?.message) {
-    const { decimals, disableOffers, pricesWithTax, useSellerDefault } = JSON.parse(
-      data.publicSettingsForApp.message
-    )
+    const {
+      decimals,
+      disableOffers,
+      pricesWithTax,
+      useSellerDefault,
+    } = JSON.parse(data.publicSettingsForApp.message)
 
     return {
       disableOffers: disableOffers || DEFAULT_DISABLE_OFFERS,
