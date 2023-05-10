@@ -5,6 +5,7 @@ export function parseToJsonLD({
   disableOffers,
   decimals,
   pricesWithTax,
+  userSellerDefault,
 }: {
   product: unknown
   selectedItem: unknown
@@ -12,6 +13,7 @@ export function parseToJsonLD({
   disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
+  userSellerDefault?: boolean
 }): {
   '@context': string
   '@type': string
@@ -31,7 +33,13 @@ export function parseToJsonLD({
     lowPrice: number
     highPrice: number
     priceCurrency: string
-    offers: unknown
+    offers: Array<{
+      '@type': string
+      seller: {
+        '@type': string
+        name: string
+      }
+    }>
     offerCount: number
   }
 }

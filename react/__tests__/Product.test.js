@@ -8,6 +8,7 @@ import * as getBaseUrl from '../modules/baseUrl'
 let mockDisableOffers = false
 let mockDecimals = 2
 let mockPricesWithTax = false
+let mockUseSellerDefault = false
 let mockGetBaseUrl
 const mockedBaseUrl = `www.vtex.com.br`
 
@@ -236,6 +237,32 @@ describe('Product Structured Data', () => {
     })
 
     expect(result['@id']).toBe(`${mockedBaseUrl}/${copyProduct.linkText}/p`)
+  })
+
+  it('should handle multiple sellers and option useSellerDefault, get correct seller name and price', () => {
+    const copyProduct = clone(mktPlaceProduct)
+
+    const [item] = copyProduct.items
+
+    item.sellers.forEach((seller) => {
+      seller.sellerDefault = seller.sellerId === '11829'
+    })
+
+    mockDecimals = 2
+    mockPricesWithTax = false
+    mockUseSellerDefault = true
+
+    const result = parseToJsonLD({
+      product: copyProduct,
+      selectedItem: item,
+      currency,
+      decimals: mockDecimals,
+      pricesWithTax: mockPricesWithTax,
+      useSellerDefault: mockUseSellerDefault,
+    })
+
+    expect(result.offers.offers[0].seller.name).toBe('multisistemas')
+    expect(result.offers.offers[0].price).toBe(899000)
   })
 
   it('should not fill offers if disableOffers is true', () => {

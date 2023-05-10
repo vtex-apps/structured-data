@@ -60,8 +60,14 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const parseSKUToOffer = (item, currency, { decimals, pricesWithTax }) => {
-  const { low: seller } = lowHighForSellers(item.sellers, { pricesWithTax })
+const parseSKUToOffer = (
+  item,
+  currency,
+  { decimals, pricesWithTax, useSellerDefault }
+) => {
+  const seller = useSellerDefault
+    ? getSellerDefault(item.sellers)
+    : lowHighForSellers(item.sellers, { pricesWithTax }).low
 
   const availability = getSKUAvailabilityString(seller)
 
@@ -99,10 +105,16 @@ const getAllSellers = (items) => {
   return flat
 }
 
+const getSellerDefault = (sellers) => {
+  const seller = sellers.find((s) => s.sellerDefault)
+
+  return seller
+}
+
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax }
+  { decimals, pricesWithTax, useSellerDefault }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -110,7 +122,11 @@ const composeAggregateOffer = (
 
   const offersList = items
     .map((element) =>
-      parseSKUToOffer(element, currency, { decimals, pricesWithTax })
+      parseSKUToOffer(element, currency, {
+        decimals,
+        pricesWithTax,
+        useSellerDefault,
+      })
     )
     .filter(Boolean)
 
@@ -149,6 +165,7 @@ export const parseToJsonLD = ({
   disableOffers,
   decimals,
   pricesWithTax,
+  useSellerDefault,
 }) => {
   const [image] = selectedItem ? selectedItem.images : []
   const { brand } = product
@@ -157,6 +174,7 @@ export const parseToJsonLD = ({
   const offers = composeAggregateOffer(product, currency, {
     decimals,
     pricesWithTax,
+    useSellerDefault,
   })
 
   if (offers === null) {
@@ -187,7 +205,12 @@ function StructuredData({ product, selectedItem }) {
     culture: { currency },
   } = useRuntime()
 
-  const { disableOffers, decimals, pricesWithTax } = useAppSettings()
+  const {
+    decimals,
+    disableOffers,
+    pricesWithTax,
+    useSellerDefault,
+  } = useAppSettings()
 
   const productLD = parseToJsonLD({
     product,
@@ -196,6 +219,7 @@ function StructuredData({ product, selectedItem }) {
     disableOffers,
     decimals,
     pricesWithTax,
+    useSellerDefault,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />
