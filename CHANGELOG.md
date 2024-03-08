@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+
+- SSR settings remove for disable offers
+
 ## [0.12.0] - 2023-05-10
 
 ### Added
