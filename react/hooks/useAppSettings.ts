@@ -15,7 +15,7 @@ interface Settings {
 }
 
 const useAppSettings = (): Settings => {
-  const { data } = useQuery(GET_SETTINGS, {})
+  const { data } = useQuery(GET_SETTINGS)
 
   if (data?.publicSettingsForApp?.message) {
     const {
