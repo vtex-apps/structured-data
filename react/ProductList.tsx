@@ -30,7 +30,7 @@ export function getProductList({
   currency: string
   products?: Product[]
 }) {
-  if (!Array.isArray(products)) {
+  if (!Array.isArray(products) || products?.length === 0) {
     return null
   }
 
