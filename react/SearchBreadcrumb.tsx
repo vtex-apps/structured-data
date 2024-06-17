@@ -11,7 +11,7 @@ interface SearchBreadcrumbItem {
 }
 
 const getSearchBreadcrumb = (breadcrumb?: SearchBreadcrumbItem[]) => {
-  if (!Array.isArray(breadcrumb)) {
+  if (!Array.isArray(breadcrumb) || breadcrumb?.length === 0) {
     return {}
   }
 
