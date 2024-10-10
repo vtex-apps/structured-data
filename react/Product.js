@@ -189,7 +189,6 @@ export const parseToJsonLD = ({
 
   const baseUrl = getBaseUrl()
 
-  // Category is derived from product categories array
   const category = getCategoryName(product)
 
   // Adding missing properties like GTIN, review, aggregateRating if available
