@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- **Product Schema** for **Reference Number**, `mpn` now uses item reference identification.
+
+### Added
+- `GTIN` when `EAN` is available
+
 ## [0.12.1] - 2024-06-17
 
 ### Fixed

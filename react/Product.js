@@ -171,6 +171,12 @@ export const parseToJsonLD = ({
   const { brand } = product
   const name = product.productName
 
+  // Ensure that mpn uses the correct fallback logic
+  const mpn =
+    selectedItem?.referenceId?.[0]?.Value ||
+    product?.productReference ||
+    product?.productId
+
   const offers = composeAggregateOffer(product, currency, {
     decimals,
     pricesWithTax,
@@ -183,18 +189,25 @@ export const parseToJsonLD = ({
 
   const baseUrl = getBaseUrl()
 
+  // Category is derived from product categories array
+  const category = getCategoryName(product)
+
+  // Adding missing properties like GTIN, review, aggregateRating if available
+  const gtin = selectedItem?.ean || null
+
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     '@id': `${baseUrl}/${product.linkText}/p`,
     name,
     brand: parseBrand(brand),
-    image: image && image.imageUrl,
+    image: image?.imageUrl || null,
     description: product.metaTagDescription || product.description,
-    mpn: product.productId,
-    sku: selectedItem && selectedItem.itemId,
-    category: getCategoryName(product),
+    mpn, // Updated mpn logic
+    sku: selectedItem?.itemId || null,
+    category,
     offers: disableOffers ? null : offers,
+    gtin, // Add GTIN if available
   }
 
   return productLD
