@@ -27,8 +27,9 @@
     "graphql": "^14.6.0",
     "schema-dts": "^0.8.2",
     "typescript": "3.9.7",
-    "vtex.apps-graphql": "3.17.4",
-    "vtex.render-runtime": "8.134.11"
+    "vtex.apps-graphql": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.apps-graphql@3.17.4/public/@types/vtex.apps-graphql",
+    "vtex.render-runtime": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.11/public/@types/vtex.render-runtime",
+    "vtex.structured-data": "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.structured-data@0.12.1/public/@types/vtex.structured-data"
   },
   "version": "0.12.1"
 }
