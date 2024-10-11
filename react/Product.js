@@ -171,7 +171,6 @@ export const parseToJsonLD = ({
   const { brand } = product
   const name = product.productName
 
-  // Ensure that mpn uses the correct fallback logic
   const mpn =
     selectedItem?.referenceId?.[0]?.Value ||
     product?.productReference ||
