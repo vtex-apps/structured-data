@@ -40,6 +40,7 @@ describe('Product List Structured Data', () => {
           name: products[0].brand,
         },
         description: products[0].description,
+        gtin: null,
         category:
           products[0].categoryTree[products[0].categoryTree.length - 1].name,
         image: products[0].items[0].images[0].imageUrl,
@@ -84,6 +85,7 @@ describe('Product List Structured Data', () => {
           name: products[1].brand,
         },
         description: products[1].description,
+        gtin: null,
         category:
           products[1].categoryTree[products[1].categoryTree.length - 1].name,
         image: products[1].items[0].images[0].imageUrl,
