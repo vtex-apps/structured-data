@@ -190,7 +190,6 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  // Adding missing properties like GTIN, review, aggregateRating if available
   const gtin = selectedItem?.ean || null
 
   const productLD = {
