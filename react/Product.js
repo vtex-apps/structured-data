@@ -204,7 +204,7 @@ export const parseToJsonLD = ({
     sku: selectedItem?.itemId || null,
     category,
     offers: disableOffers ? null : offers,
-    gtin, // Add GTIN if available
+    gtin,
   }
 
   return productLD
