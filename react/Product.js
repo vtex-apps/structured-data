@@ -171,6 +171,11 @@ export const parseToJsonLD = ({
   const { brand } = product
   const name = product.productName
 
+  const mpn =
+    selectedItem?.referenceId?.[0]?.Value ||
+    product?.productReference ||
+    product?.productId
+
   const offers = composeAggregateOffer(product, currency, {
     decimals,
     pricesWithTax,
@@ -183,18 +188,23 @@ export const parseToJsonLD = ({
 
   const baseUrl = getBaseUrl()
 
+  const category = getCategoryName(product)
+
+  const gtin = selectedItem?.ean || null
+
   const productLD = {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     '@id': `${baseUrl}/${product.linkText}/p`,
     name,
     brand: parseBrand(brand),
-    image: image && image.imageUrl,
+    image: image?.imageUrl || null,
     description: product.metaTagDescription || product.description,
-    mpn: product.productId,
-    sku: selectedItem && selectedItem.itemId,
-    category: getCategoryName(product),
+    mpn,
+    sku: selectedItem?.itemId || null,
+    category,
     offers: disableOffers ? null : offers,
+    gtin,
   }
 
   return productLD

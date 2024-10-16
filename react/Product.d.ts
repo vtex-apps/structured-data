@@ -25,6 +25,7 @@ export function parseToJsonLD({
   }
   image: string
   description: string
+  gtin: string
   mpn: string
   sku: number
   category: string

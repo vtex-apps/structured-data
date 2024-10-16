@@ -5517,6 +5517,18 @@ verror@1.10.0:
     core-util-is "1.0.2"
     extsprintf "^1.2.0"
 
+"vtex.apps-graphql@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.apps-graphql@3.17.4/public/@types/vtex.apps-graphql":
+  version "3.17.4"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.apps-graphql@3.17.4/public/@types/vtex.apps-graphql#0e0abc699713a7113f1ec4948456bcd9e330d0f9"
+
+"vtex.render-runtime@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.11/public/@types/vtex.render-runtime":
+  version "8.134.11"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.render-runtime@8.134.11/public/@types/vtex.render-runtime#0e42a00ac9b26c34b5b18b7a080f7dc3a5ac9959"
+
+"vtex.structured-data@http://vtex.vtexassets.com/_v/public/typings/v1/vtex.structured-data@0.12.1/public/@types/vtex.structured-data":
+  version "0.12.1"
+  resolved "http://vtex.vtexassets.com/_v/public/typings/v1/vtex.structured-data@0.12.1/public/@types/vtex.structured-data#e16878cda359132ac26b5a83ed0123ec0cd486d5"
+
 w3c-hr-time@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
