@@ -3,5 +3,14 @@
   "root": true,
   "env": {
     "node": true
+  },
+  "rules": {
+    "@typescript-eslint/camelcase": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }
