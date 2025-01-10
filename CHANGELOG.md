@@ -7,12 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+Creatioj of 2 new appSettings (false by default):
+
+- disableAggregateOffer - used to change the aggregateOffer in Offer
+- useImagesArray - used to consider an array of images for the product, instead using only the first one
+
 ## [0.12.2] - 2024-10-16
 
 ### Changed
+
 - **Product Schema** for **Reference Number**, `mpn` now uses item reference identification.
 
 ### Added
+
 - `GTIN` when `EAN` is available
 
 ## [0.12.1] - 2024-06-17
