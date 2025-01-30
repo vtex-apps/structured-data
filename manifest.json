@@ -52,12 +52,6 @@
         "type": "boolean",
         "default": false,
         "description": "Use single Offer insteand of AggregateOffer"
-      },
-      "useImagesArray": {
-        "title": "Use images array",
-        "type": "boolean",
-        "default": false,
-        "description": "Use images array for product instead of single one"
       }
     }
   },

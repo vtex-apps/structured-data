@@ -15,7 +15,6 @@ interface Settings {
   pricesWithTax: boolean
   useSellerDefault: boolean
   disableAggregateOffer: boolean
-  useImagesArray: boolean
 }
 
 const useAppSettings = (): Settings => {
@@ -28,7 +27,6 @@ const useAppSettings = (): Settings => {
       pricesWithTax,
       useSellerDefault,
       disableAggregateOffer,
-      useImagesArray,
     } = JSON.parse(data.publicSettingsForApp.message)
 
     return {
@@ -38,7 +36,6 @@ const useAppSettings = (): Settings => {
       useSellerDefault: useSellerDefault || DEFAULT_USE_SELLER_DEFAULT,
       disableAggregateOffer:
         disableAggregateOffer || DEFAULT_DISABLE_AGGREGATE_OFFER,
-      useImagesArray: useImagesArray || DEFAULT_USE_IMAGES_ARRAY,
     }
   }
 
@@ -48,7 +45,6 @@ const useAppSettings = (): Settings => {
     pricesWithTax: DEFAULT_PRICES_WITH_TAX,
     useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,
     disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
-    useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
   }
 }
 

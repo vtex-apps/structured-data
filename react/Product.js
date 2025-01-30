@@ -171,9 +171,8 @@ export const parseToJsonLD = ({
   pricesWithTax,
   useSellerDefault,
   disableAggregateOffer,
-  useImagesArray,
 }) => {
-  const images = selectedItem ? selectedItem.images : []
+  const [image] = selectedItem ? selectedItem.images : []
   const { brand } = product
   const name = product.productName
 
@@ -205,9 +204,7 @@ export const parseToJsonLD = ({
     '@id': `${baseUrl}/${product.linkText}/p`,
     name,
     brand: parseBrand(brand),
-    image: useImagesArray
-      ? images.map((el) => el.imageUrl)
-      : images[0]?.imageUrl || null,
+    image: image?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
     sku: selectedItem?.itemId || null,
@@ -229,7 +226,6 @@ function StructuredData({ product, selectedItem }) {
     disableOffers,
     pricesWithTax,
     useSellerDefault,
-    useImagesArray,
     disableAggregateOffer,
   } = useAppSettings()
 
@@ -242,7 +238,6 @@ function StructuredData({ product, selectedItem }) {
     pricesWithTax,
     useSellerDefault,
     disableAggregateOffer,
-    useImagesArray,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />
