@@ -114,7 +114,7 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer }
+  { decimals, pricesWithTax, useSellerDefault }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -132,10 +132,6 @@ const composeAggregateOffer = (
 
   if (offersList.length === 0) {
     return null
-  }
-
-  if (disableAggregateOffer) {
-    return offersList
   }
 
   const aggregateOffer = {
@@ -170,7 +166,6 @@ export const parseToJsonLD = ({
   decimals,
   pricesWithTax,
   useSellerDefault,
-  disableAggregateOffer,
   useImagesArray,
 }) => {
   const images = selectedItem ? selectedItem.images : []
@@ -186,7 +181,6 @@ export const parseToJsonLD = ({
     decimals,
     pricesWithTax,
     useSellerDefault,
-    disableAggregateOffer,
   })
 
   if (offers === null) {
@@ -230,7 +224,6 @@ function StructuredData({ product, selectedItem }) {
     pricesWithTax,
     useSellerDefault,
     useImagesArray,
-    disableAggregateOffer,
   } = useAppSettings()
 
   const productLD = parseToJsonLD({
@@ -241,7 +234,6 @@ function StructuredData({ product, selectedItem }) {
     decimals,
     pricesWithTax,
     useSellerDefault,
-    disableAggregateOffer,
     useImagesArray,
   })
 

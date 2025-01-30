@@ -9,10 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-Creatioj of 2 new appSettings (false by default):
-
-- disableAggregateOffer - used to change the aggregateOffer in Offer
-- useImagesArray - used to consider an array of images for the product, instead using only the first one
+Creation of new appSettings (false by default) `useImagesArray` - used to consider an array of images for the product, instead using only the first one
 
 ## [0.12.2] - 2024-10-16
 
