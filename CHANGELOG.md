@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Changed
+- Updated GitHub Actions configuration to use `actions/cache@v4` to avoid issues with deprecated versions (`v1` and `v2`), which will be retired on March 1st, 2025.
+
 ## [0.12.2] - 2024-10-16
 
 ### Changed
