@@ -7,17 +7,24 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+Creation of a new appSettings (false by default) disableAggregateOffer - used to change the aggregateOffer in Offer
+
 ## [0.12.3] - 2025-02-18
 
 ### Changed
+
 - Updated GitHub Actions configuration to use `actions/cache@v4` to avoid issues with deprecated versions (`v1` and `v2`), which will be retired on March 1st, 2025.
 
 ## [0.12.2] - 2024-10-16
 
 ### Changed
+
 - **Product Schema** for **Reference Number**, `mpn` now uses item reference identification.
 
 ### Added
+
 - `GTIN` when `EAN` is available
 
 ## [0.12.1] - 2024-06-17
