@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.13.0] - 2025-02-19
+
 ### Added
 
 Creation of a new appSettings (false by default) disableAggregateOffer - used to change the aggregateOffer in Offer
