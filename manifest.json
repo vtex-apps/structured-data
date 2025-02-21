@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "structured-data",
-  "version": "0.12.2",
+  "version": "0.13.0",
   "title": "Structured data",
   "description": "Structured data",
   "defaultLocale": "pt-BR",
@@ -52,6 +52,12 @@
         "type": "boolean",
         "default": false,
         "description": "Use images array for product instead of single one"
+      },
+      "disableAggregateOffer": {
+        "title": "Disable aggregate offer",
+        "type": "boolean",
+        "default": false,
+        "description": "Use single Offer insteand of AggregateOffer"
       }
     }
   },

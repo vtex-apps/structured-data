@@ -114,7 +114,7 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax, useSellerDefault }
+  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -132,6 +132,10 @@ const composeAggregateOffer = (
 
   if (offersList.length === 0) {
     return null
+  }
+
+  if (disableAggregateOffer) {
+    return offersList
   }
 
   const aggregateOffer = {
@@ -167,6 +171,7 @@ export const parseToJsonLD = ({
   pricesWithTax,
   useSellerDefault,
   useImagesArray,
+  disableAggregateOffer,
 }) => {
   const images = selectedItem ? selectedItem.images : []
   const { brand } = product
@@ -181,6 +186,7 @@ export const parseToJsonLD = ({
     decimals,
     pricesWithTax,
     useSellerDefault,
+    disableAggregateOffer
   })
 
   if (offers === null) {
@@ -200,8 +206,8 @@ export const parseToJsonLD = ({
     name,
     brand: parseBrand(brand),
     image: useImagesArray
-      ? images.map((el) => el.imageUrl)
-      : images[0]?.imageUrl || null,
+    ? images.map((el) => el.imageUrl)
+    : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
     sku: selectedItem?.itemId || null,
@@ -224,6 +230,7 @@ function StructuredData({ product, selectedItem }) {
     pricesWithTax,
     useSellerDefault,
     useImagesArray,
+    disableAggregateOffer,
   } = useAppSettings()
 
   const productLD = parseToJsonLD({
@@ -235,6 +242,7 @@ function StructuredData({ product, selectedItem }) {
     pricesWithTax,
     useSellerDefault,
     useImagesArray,
+    disableAggregateOffer,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />
