@@ -6,7 +6,6 @@ const DEFAULT_DISABLE_OFFERS = false
 const DEFAULT_DECIMALS = 2
 const DEFAULT_PRICES_WITH_TAX = false
 const DEFAULT_USE_SELLER_DEFAULT = false
-const DEFAULT_DISABLE_AGGREGATE_OFFER = false
 const DEFAULT_USE_IMAGES_ARRAY = false
 
 interface Settings {
