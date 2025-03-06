@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+- Creation of new appSettings (false by default) `useImagesArray` - used to consider an array of images for the product, instead using only the first one
+
 ## [0.13.1] - 2025-03-06
 
 ### Added
