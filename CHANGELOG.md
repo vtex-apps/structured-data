@@ -7,13 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
-Creation of new appSettings (false by default) `useImagesArray` - used to consider an array of images for the product, instead using only the first one
+- Creation of new appSettings (false by default) `useImagesArray` - used to consider an array of images for the product, instead using only the first one
+
+## [0.13.1] - 2025-03-06
+
+### Added
+
+- (CI) Add permissions for Danger to comment on PRs
 
 ## [0.13.0] - 2025-02-19
 
 ### Added
 
-Creation of a new appSettings (false by default) disableAggregateOffer - used to change the aggregateOffer in Offer
+- Creation of a new appSettings (false by default) disableAggregateOffer - used to change the aggregateOffer in Offer
 
 ## [0.12.3] - 2025-02-18
 
