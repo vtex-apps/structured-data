@@ -3,6 +3,10 @@ name: PR actions
   pull_request:
     branches:
       - master
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
 jobs:
   danger-ci:
     name: Danger CI
@@ -17,7 +21,7 @@ jobs:
       - name: Danger CI
         uses: vtex/danger@master
         env:
-          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REQUIRE_CHANGELOG_VERSION: false
   io-app-test:
     name: IO app test
@@ -31,12 +35,12 @@ jobs:
           RUNNER_TEMP: /tmp
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v4
         id: yarn-cache
         with:
-          path: '${{ steps.yarn-cache-dir-path.outputs.dir }}'
-          key: '${{ runner.os }}-yarn-${{ hashFiles(''**/yarn.lock'') }}'
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Run test on every builder directory
@@ -53,12 +57,12 @@ jobs:
           RUNNER_TEMP: /tmp
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+        run: echo "dir=$(yarn cache dir)" >> "$GITHUB_OUTPUT"
       - uses: actions/cache@v4
         id: yarn-cache
         with:
-          path: '${{ steps.yarn-cache-dir-path.outputs.dir }}'
-          key: '${{ runner.os }}-yarn-${{ hashFiles(''**/yarn.lock'') }}'
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Lint project
