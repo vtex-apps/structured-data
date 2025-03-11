@@ -186,7 +186,7 @@ export const parseToJsonLD = ({
     decimals,
     pricesWithTax,
     useSellerDefault,
-    disableAggregateOffer
+    disableAggregateOffer,
   })
 
   if (offers === null) {
@@ -206,8 +206,8 @@ export const parseToJsonLD = ({
     name,
     brand: parseBrand(brand),
     image: useImagesArray
-    ? images.map((el) => el.imageUrl)
-    : images[0]?.imageUrl || null,
+      ? images.map((el) => el.imageUrl)
+      : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
     sku: selectedItem?.itemId || null,
