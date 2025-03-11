@@ -6,6 +6,7 @@ const DEFAULT_DISABLE_OFFERS = false
 const DEFAULT_DECIMALS = 2
 const DEFAULT_PRICES_WITH_TAX = false
 const DEFAULT_USE_SELLER_DEFAULT = false
+const DEFAULT_USE_IMAGES_ARRAY = false
 const DEFAULT_DISABLE_AGGREGATE_OFFER = false
 
 interface Settings {
@@ -13,6 +14,7 @@ interface Settings {
   decimals: number
   pricesWithTax: boolean
   useSellerDefault: boolean
+  useImagesArray: boolean
   disableAggregateOffer: boolean
 }
 
@@ -25,6 +27,7 @@ const useAppSettings = (): Settings => {
       disableOffers,
       pricesWithTax,
       useSellerDefault,
+      useImagesArray,
       disableAggregateOffer,
     } = JSON.parse(data.publicSettingsForApp.message)
 
@@ -33,6 +36,7 @@ const useAppSettings = (): Settings => {
       decimals: decimals || DEFAULT_DECIMALS,
       pricesWithTax: pricesWithTax || DEFAULT_PRICES_WITH_TAX,
       useSellerDefault: useSellerDefault || DEFAULT_USE_SELLER_DEFAULT,
+      useImagesArray: useImagesArray || DEFAULT_USE_IMAGES_ARRAY,
       disableAggregateOffer:
         disableAggregateOffer || DEFAULT_DISABLE_AGGREGATE_OFFER,
     }
@@ -43,6 +47,7 @@ const useAppSettings = (): Settings => {
     decimals: DEFAULT_DECIMALS,
     pricesWithTax: DEFAULT_PRICES_WITH_TAX,
     useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,
+    useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
     disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
   }
 }

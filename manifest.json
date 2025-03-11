@@ -47,6 +47,12 @@
         "default": false,
         "description": "Use seller default price in AggregateOffer"
       },
+      "useImagesArray": {
+        "title": "Use images array",
+        "type": "boolean",
+        "default": false,
+        "description": "Use images array for product instead of single one"
+      },
       "disableAggregateOffer": {
         "title": "Disable aggregate offer",
         "type": "boolean",
