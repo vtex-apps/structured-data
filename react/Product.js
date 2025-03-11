@@ -172,6 +172,7 @@ export const parseToJsonLD = ({
   useSellerDefault,
   useImagesArray,
   disableAggregateOffer,
+  gtinValue,
 }) => {
   const images = selectedItem ? selectedItem.images : []
   const { brand } = product
@@ -197,7 +198,7 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  const gtin = selectedItem?.ean || null
+  const gtin = selectedItem?.[gtinValue]
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -231,6 +232,7 @@ function StructuredData({ product, selectedItem }) {
     useSellerDefault,
     useImagesArray,
     disableAggregateOffer,
+    gtinValue,
   } = useAppSettings()
 
   const productLD = parseToJsonLD({
@@ -243,6 +245,7 @@ function StructuredData({ product, selectedItem }) {
     useSellerDefault,
     useImagesArray,
     disableAggregateOffer,
+    gtinValue,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />
