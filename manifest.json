@@ -58,6 +58,28 @@
         "type": "boolean",
         "default": false,
         "description": "Use single Offer insteand of AggregateOffer"
+      },
+      "gtinValue": {
+        "title": "GTIN Value",
+        "type": "string",
+        "anyOf": [
+          {
+            "type": "string",
+            "enum": [
+              "ean"
+            ],
+            "title": "EAN"
+          },
+          {
+            "type": "string",
+            "enum": [
+              "itemId"
+            ],
+            "title": "SKU ID"
+          }
+        ],
+        "default": "ean",
+        "description": "Set the value used for GTIN"
       }
     }
   },

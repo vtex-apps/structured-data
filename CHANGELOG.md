@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+- Add new setting in app settings
+- Use this new setting value in Product JS
+
 ## [0.14.0] - 2025-03-11
 
 - Creation of new appSettings (false by default) `useImagesArray` - used to consider an array of images for the product, instead using only the first one
