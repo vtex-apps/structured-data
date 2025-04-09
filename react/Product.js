@@ -198,7 +198,7 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  const gtin = selectedItem?.[gtinValue]
+  const gtin = selectedItem?.[gtinValue] || null
 
   const productLD = {
     '@context': 'https://schema.org/',
