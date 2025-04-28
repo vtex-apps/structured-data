@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.15.0] - 2025-04-28
+
 ### Added
 - Add new setting in app settings
 - Use this new setting value in Product JS
