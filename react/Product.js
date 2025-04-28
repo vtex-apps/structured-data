@@ -60,6 +60,16 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
+const formatGTIN = (gtin) => {
+  if (!gtin || typeof gtin !== 'string') return null
+
+  const validLengths = [8, 12, 13, 14]
+  if (validLengths.includes(gtin.length)) return gtin
+
+  const targetLength = validLengths.find((len) => gtin.length < len) || 14
+  return gtin.padStart(targetLength, '0')
+}
+
 const parseSKUToOffer = (
   item,
   currency,
@@ -172,6 +182,7 @@ export const parseToJsonLD = ({
   useSellerDefault,
   useImagesArray,
   disableAggregateOffer,
+  gtinValue,
 }) => {
   const images = selectedItem ? selectedItem.images : []
   const { brand } = product
@@ -197,7 +208,8 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  const gtin = selectedItem?.ean || null
+  const rawGTIN = selectedItem?.[gtinValue] || null
+  const gtin = formatGTIN(rawGTIN)
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -231,6 +243,7 @@ function StructuredData({ product, selectedItem }) {
     useSellerDefault,
     useImagesArray,
     disableAggregateOffer,
+    gtinValue,
   } = useAppSettings()
 
   const productLD = parseToJsonLD({
@@ -243,6 +256,7 @@ function StructuredData({ product, selectedItem }) {
     useSellerDefault,
     useImagesArray,
     disableAggregateOffer,
+    gtinValue,
   })
 
   return <script {...jsonLdScriptProps(productLD)} />
