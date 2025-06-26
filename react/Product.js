@@ -75,15 +75,14 @@ const parseSKUToOffer = (
   currency,
   { decimals, pricesWithTax, useSellerDefault, gtinValue }
 ) => {
-  const seller = useSellerDefault
-    ? getSellerDefault(item.sellers)
-    : lowHighForSellers(item.sellers, { pricesWithTax }).low
-
-  const { low: lowSeller } = lowHighForSellers(item.sellers, { pricesWithTax })
+  const lowSeller = lowHighForSellers(item.sellers, { pricesWithTax }).low
+  const seller = useSellerDefault ? getSellerDefault(item.sellers) : lowSeller
   const availability = getSKUAvailabilityString(seller)
 
-  const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
-  const lowPrice = getFinalPrice(lowSeller, getSpotPrice, {
+const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
+const lowPrice = seller === lowSeller
+  ? price
+  : getFinalPrice(lowSeller, getSpotPrice, {
     decimals,
     pricesWithTax,
   })
