@@ -108,6 +108,8 @@ const parseSKUToOffer = (
       name: seller ? seller.sellerName : '',
     },
   }
+
+  return offer
 }
 
 const getAllSellers = (items) => {
@@ -126,7 +128,13 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer, gtinValue }
+  {
+    decimals,
+    pricesWithTax,
+    useSellerDefault,
+    disableAggregateOffer,
+    gtinValue,
+  }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
