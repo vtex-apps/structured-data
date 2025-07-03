@@ -64,9 +64,11 @@ const formatGTIN = (gtin) => {
   if (!gtin || typeof gtin !== 'string') return null
 
   const validLengths = [8, 12, 13, 14]
+
   if (validLengths.includes(gtin.length)) return gtin
 
   const targetLength = validLengths.find((len) => gtin.length < len) || 14
+
   return gtin.padStart(targetLength, '0')
 }
 
@@ -93,10 +95,9 @@ const parseSKUToOffer = (
     return null
   }
 
-  return {
+  const offer = {
     '@type': 'Offer',
     price,
-    lowPrice, 
     priceCurrency: currency,
     availability,
     sku: skuValue,
@@ -137,7 +138,7 @@ const composeAggregateOffer = (
         decimals,
         pricesWithTax,
         useSellerDefault,
-        gtinValue
+        gtinValue,
       })
     )
     .filter(Boolean)
@@ -200,7 +201,7 @@ export const parseToJsonLD = ({
     pricesWithTax,
     useSellerDefault,
     disableAggregateOffer,
-    gtinValue
+    gtinValue,
   })
 
   if (offers === null) {

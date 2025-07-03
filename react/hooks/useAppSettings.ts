@@ -31,7 +31,7 @@ const useAppSettings = (): Settings => {
       useSellerDefault,
       useImagesArray,
       disableAggregateOffer,
-      gtinValue
+      gtinValue,
     } = JSON.parse(data.publicSettingsForApp.message)
 
     return {
@@ -42,7 +42,7 @@ const useAppSettings = (): Settings => {
       useImagesArray: useImagesArray || DEFAULT_USE_IMAGES_ARRAY,
       disableAggregateOffer:
         disableAggregateOffer || DEFAULT_DISABLE_AGGREGATE_OFFER,
-      gtinValue: gtinValue || DEFAULT_GTIN_VALUE
+      gtinValue: gtinValue || DEFAULT_GTIN_VALUE,
     }
   }
 
@@ -53,7 +53,7 @@ const useAppSettings = (): Settings => {
     useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,
     useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
     disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
-    gtinValue: DEFAULT_GTIN_VALUE
+    gtinValue: DEFAULT_GTIN_VALUE,
   }
 }
 
