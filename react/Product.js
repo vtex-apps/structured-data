@@ -85,7 +85,7 @@ const parseSKUToOffer = (
 
   const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
 
-  const skuValue = item?.[gtinValue] || item.itemId
+  const skuValue = item.gtinValue || item.itemId
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
