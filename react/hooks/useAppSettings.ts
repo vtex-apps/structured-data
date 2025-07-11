@@ -8,7 +8,7 @@ const DEFAULT_PRICES_WITH_TAX = false
 const DEFAULT_USE_SELLER_DEFAULT = false
 const DEFAULT_USE_IMAGES_ARRAY = false
 const DEFAULT_DISABLE_AGGREGATE_OFFER = false
-const DEFAULT_GTIN_VALUE = 'ean'
+const DEFAULT_GTIN_VALUE = 'itemId'
 
 interface Settings {
   disableOffers: boolean
