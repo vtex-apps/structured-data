@@ -220,8 +220,9 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  const rawGTIN = selectedItem?.[gtinValue] || null
+  const rawGTIN = selectedItem?.[gtinValue]
   const gtin = formatGTIN(rawGTIN)
+  const fallbackSKU = selectedItem?.itemId || null
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -234,7 +235,7 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: gtin || null,
+    sku: gtin || fallbackSKU,
     category,
     offers: disableOffers ? null : offers,
     gtin,
