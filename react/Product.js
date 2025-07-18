@@ -64,16 +64,18 @@ const formatGTIN = (gtin) => {
   if (!gtin || typeof gtin !== 'string') return null
 
   const validLengths = [8, 12, 13, 14]
+
   if (validLengths.includes(gtin.length)) return gtin
 
   const targetLength = validLengths.find((len) => gtin.length < len) || 14
+
   return gtin.padStart(targetLength, '0')
 }
 
 const parseSKUToOffer = (
   item,
   currency,
-  { decimals, pricesWithTax, useSellerDefault }
+  { decimals, pricesWithTax, useSellerDefault, gtinValue }
 ) => {
   const seller = useSellerDefault
     ? getSellerDefault(item.sellers)
@@ -82,6 +84,11 @@ const parseSKUToOffer = (
   const availability = getSKUAvailabilityString(seller)
 
   const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
+
+  const rawGTIN = item?.[gtinValue]
+  const isGTINField = gtinValue !== 'itemId' && typeof rawGTIN === 'string'
+  const gtin = isGTINField ? formatGTIN(rawGTIN) : null
+  const skuValue = isGTINField ? gtin : item.itemId
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -95,8 +102,8 @@ const parseSKUToOffer = (
     '@type': 'Offer',
     price,
     priceCurrency: currency,
-    availability: getSKUAvailabilityString(seller),
-    sku: item.itemId,
+    availability,
+    sku: skuValue,
     itemCondition: 'http://schema.org/NewCondition',
     priceValidUntil: path(['commertialOffer', 'PriceValidUntil'], seller),
     seller: {
@@ -124,7 +131,13 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer }
+  {
+    decimals,
+    pricesWithTax,
+    useSellerDefault,
+    disableAggregateOffer,
+    gtinValue,
+  }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -136,6 +149,7 @@ const composeAggregateOffer = (
         decimals,
         pricesWithTax,
         useSellerDefault,
+        gtinValue,
       })
     )
     .filter(Boolean)
@@ -198,6 +212,7 @@ export const parseToJsonLD = ({
     pricesWithTax,
     useSellerDefault,
     disableAggregateOffer,
+    gtinValue,
   })
 
   if (offers === null) {
@@ -208,8 +223,9 @@ export const parseToJsonLD = ({
 
   const category = getCategoryName(product)
 
-  const rawGTIN = selectedItem?.[gtinValue] || null
+  const rawGTIN = selectedItem?.[gtinValue]
   const gtin = formatGTIN(rawGTIN)
+  const fallbackSKU = selectedItem?.itemId || null
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -222,7 +238,7 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: selectedItem?.itemId || null,
+    sku: gtin || fallbackSKU,
     category,
     offers: disableOffers ? null : offers,
     gtin,
