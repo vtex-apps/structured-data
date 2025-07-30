@@ -90,6 +90,8 @@ const parseSKUToOffer = (
   const gtin = isGTINField ? formatGTIN(rawGTIN) : null
   const skuValue = isGTINField ? gtin : item.itemId
 
+  console.log('skuValue', skuValue)
+
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
   // product it's free (wrong info), but out of stock.
@@ -224,7 +226,17 @@ export const parseToJsonLD = ({
   const category = getCategoryName(product)
 
   const rawGTIN = selectedItem?.[gtinValue]
-  const gtin = formatGTIN(rawGTIN)
+
+  const formatGTIN = (value) => {
+    if (!value) return null
+    return String(value).replace(/^0+/, '')
+  }
+
+  const gtin = rawGTIN != null
+    ? gtinValue === 'itemId'
+      ? rawGTIN // don't format itemId
+      : formatGTIN(rawGTIN)
+    : null
   const fallbackSKU = selectedItem?.itemId || null
 
   const productLD = {
@@ -238,7 +250,7 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: gtin || fallbackSKU,
+    sku: selectedItem?.itemId || null,
     category,
     offers: disableOffers ? null : offers,
     gtin,
