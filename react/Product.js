@@ -250,7 +250,7 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: selectedItem?.itemId || null,
+    sku: gtin || fallbackSKU,
     category,
     offers: disableOffers ? null : offers,
     gtin,
