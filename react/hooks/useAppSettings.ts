@@ -9,6 +9,7 @@ const DEFAULT_USE_SELLER_DEFAULT = false
 const DEFAULT_USE_IMAGES_ARRAY = false
 const DEFAULT_DISABLE_AGGREGATE_OFFER = false
 const DEFAULT_GTIN_VALUE = 'itemId'
+const DEFAULT_DISABLE_PRODUCT = false
 
 interface Settings {
   disableOffers: boolean
@@ -17,7 +18,8 @@ interface Settings {
   useSellerDefault: boolean
   useImagesArray: boolean
   disableAggregateOffer: boolean
-  gtinValue?: string
+  gtinValue?: string,
+  disableProduct?: boolean
 }
 
 const useAppSettings = (): Settings => {
@@ -32,6 +34,7 @@ const useAppSettings = (): Settings => {
       useImagesArray,
       disableAggregateOffer,
       gtinValue,
+      disableProduct
     } = JSON.parse(data.publicSettingsForApp.message)
 
     return {
@@ -43,6 +46,7 @@ const useAppSettings = (): Settings => {
       disableAggregateOffer:
         disableAggregateOffer || DEFAULT_DISABLE_AGGREGATE_OFFER,
       gtinValue: gtinValue || DEFAULT_GTIN_VALUE,
+      disableProduct: disableProduct || DEFAULT_DISABLE_PRODUCT,
     }
   }
 
@@ -54,6 +58,7 @@ const useAppSettings = (): Settings => {
     useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
     disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
     gtinValue: DEFAULT_GTIN_VALUE,
+    disableProduct: DEFAULT_DISABLE_PRODUCT,
   }
 }
 
