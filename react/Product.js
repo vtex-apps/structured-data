@@ -225,12 +225,11 @@ export const parseToJsonLD = ({
 
   const rawGTIN = selectedItem?.[gtinValue]
 
-  const gtin =
-    rawGTIN != null
-      ? gtinValue === 'itemId'
-        ? rawGTIN // don't format itemId
-        : formatGTIN(rawGTIN)
-      : null
+  let gtin = null
+
+  if (rawGTIN != null) {
+    gtin = gtinValue === 'itemId' ? rawGTIN : formatGTIN(rawGTIN)
+  }
 
   const fallbackSKU = selectedItem?.itemId || null
 
