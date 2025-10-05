@@ -227,7 +227,7 @@ export const parseToJsonLD = ({
 
   let gtin = null
 
-  if (rawGTIN != null) {
+  if (rawGTIN !== null && rawGTIN !== undefined) {
     gtin = gtinValue === 'itemId' ? rawGTIN : formatGTIN(rawGTIN)
   }
 
