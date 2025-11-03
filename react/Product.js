@@ -60,35 +60,61 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const formatGTIN = (gtin) => {
-  if (!gtin || typeof gtin !== 'string') return null
+const normalizeGTIN = (raw) => {
+  if (raw === null || raw === undefined) return null
 
-  const validLengths = [8, 12, 13, 14]
+  const digits = String(raw).replace(/\D+/g, '')
 
-  if (validLengths.includes(gtin.length)) return gtin
+  if (!digits || /^0+$/.test(digits)) return null
 
-  const targetLength = validLengths.find((len) => gtin.length < len) || 14
+  const VALID = [8, 12, 13, 14]
 
-  return gtin.padStart(targetLength, '0')
+  if (VALID.includes(digits.length)) {
+    return { value: digits, length: digits.length }
+  }
+
+  const target = VALID.find((len) => digits.length < len)
+
+  if (target) {
+    return { value: digits.padStart(target, '0'), length: target }
+  }
+
+  return null
+}
+
+const mapGtinToSpecificField = (gtinObj) => {
+  if (!gtinObj) return {}
+  const { value, length } = gtinObj
+
+  switch (length) {
+    case 8:
+      return { gtin8: value }
+
+    case 12:
+      return { gtin12: value }
+
+    case 13:
+      return { gtin13: value }
+
+    case 14:
+      return { gtin14: value }
+
+    default:
+      return {}
+  }
 }
 
 const parseSKUToOffer = (
   item,
   currency,
-  { decimals, pricesWithTax, useSellerDefault, gtinValue }
+  { decimals, pricesWithTax, useSellerDefault }
 ) => {
   const seller = useSellerDefault
     ? getSellerDefault(item.sellers)
     : lowHighForSellers(item.sellers, { pricesWithTax }).low
 
   const availability = getSKUAvailabilityString(seller)
-
   const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
-
-  const rawGTIN = item?.[gtinValue]
-  const isGTINField = gtinValue !== 'itemId' && typeof rawGTIN === 'string'
-  const gtin = isGTINField ? formatGTIN(rawGTIN) : null
-  const skuValue = isGTINField ? gtin : item.itemId
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -103,7 +129,7 @@ const parseSKUToOffer = (
     price,
     priceCurrency: currency,
     availability,
-    sku: skuValue,
+    sku: item.itemId,
     itemCondition: 'http://schema.org/NewCondition',
     priceValidUntil: path(['commertialOffer', 'PriceValidUntil'], seller),
     seller: {
@@ -131,13 +157,7 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  {
-    decimals,
-    pricesWithTax,
-    useSellerDefault,
-    disableAggregateOffer,
-    gtinValue,
-  }
+  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -149,7 +169,6 @@ const composeAggregateOffer = (
         decimals,
         pricesWithTax,
         useSellerDefault,
-        gtinValue,
       })
     )
     .filter(Boolean)
@@ -212,7 +231,6 @@ export const parseToJsonLD = ({
     pricesWithTax,
     useSellerDefault,
     disableAggregateOffer,
-    gtinValue,
   })
 
   if (offers === null) {
@@ -220,18 +238,17 @@ export const parseToJsonLD = ({
   }
 
   const baseUrl = getBaseUrl()
-
   const category = getCategoryName(product)
 
   const rawGTIN = selectedItem?.[gtinValue]
+  const gtinObj =
+    gtinValue === 'itemId'
+      ? normalizeGTIN(selectedItem?.itemId)
+      : normalizeGTIN(rawGTIN)
 
-  let gtin = null
+  const gtinFields = mapGtinToSpecificField(gtinObj)
 
-  if (rawGTIN !== null && rawGTIN !== undefined) {
-    gtin = gtinValue === 'itemId' ? rawGTIN : formatGTIN(rawGTIN)
-  }
-
-  const fallbackSKU = selectedItem?.itemId || null
+  const merchantSKU = selectedItem?.itemId || null
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -244,10 +261,10 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: gtin || fallbackSKU,
+    sku: merchantSKU,
     category,
     offers: disableOffers ? null : offers,
-    gtin,
+    ...gtinFields,
   }
 
   return productLD
@@ -280,6 +297,8 @@ function StructuredData({ product, selectedItem }) {
     disableAggregateOffer,
     gtinValue,
   })
+
+  if (!productLD) return null
 
   return <script {...jsonLdScriptProps(productLD)} />
 }
