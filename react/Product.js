@@ -247,6 +247,7 @@ export const parseToJsonLD = ({
       : normalizeGTIN(rawGTIN)
 
   const gtinFields = mapGtinToSpecificField(gtinObj)
+  const gtin = gtinObj?.value ?? null
 
   const merchantSKU = selectedItem?.itemId || null
 
@@ -265,6 +266,7 @@ export const parseToJsonLD = ({
     category,
     offers: disableOffers ? null : offers,
     ...gtinFields,
+    gtin,
   }
 
   return productLD
