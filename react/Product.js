@@ -62,52 +62,25 @@ const getSKUAvailabilityString = (seller) =>
 
 const normalizeGTIN = (raw) => {
   if (raw === null || raw === undefined) return null
-
   const digits = String(raw).replace(/\D+/g, '')
 
   if (!digits || /^0+$/.test(digits)) return null
 
   const VALID = [8, 12, 13, 14]
 
-  if (VALID.includes(digits.length)) {
-    return { value: digits, length: digits.length }
-  }
+  if (VALID.includes(digits.length)) return digits
 
   const target = VALID.find((len) => digits.length < len)
 
-  if (target) {
-    return { value: digits.padStart(target, '0'), length: target }
-  }
+  if (target) return digits.padStart(target, '0')
 
   return null
-}
-
-const mapGtinToSpecificField = (gtinObj) => {
-  if (!gtinObj) return {}
-  const { value, length } = gtinObj
-
-  switch (length) {
-    case 8:
-      return { gtin8: value }
-
-    case 12:
-      return { gtin12: value }
-
-    case 13:
-      return { gtin13: value }
-
-    case 14:
-      return { gtin14: value }
-
-    default:
-      return {}
-  }
 }
 
 const parseSKUToOffer = (
   item,
   currency,
-  { decimals, pricesWithTax, useSellerDefault }
+  { decimals, pricesWithTax, useSellerDefault, gtinValue }
 ) => {
   const seller = useSellerDefault
     ? getSellerDefault(item.sellers)
@@ -124,12 +97,18 @@ const parseSKUToOffer = (
     return null
   }
 
+  const rawSkuValue = item?.[gtinValue]
+  const normalizedGtin = normalizeGTIN(rawSkuValue)
+  const offerSku = normalizedGtin || item.itemId
+
+  if (availability === OUT_OF_STOCK && price === 0) return null
+
   const offer = {
     '@type': 'Offer',
     price,
     priceCurrency: currency,
     availability,
-    sku: item.itemId,
+    sku: offerSku,
     itemCondition: 'http://schema.org/NewCondition',
     priceValidUntil: path(['commertialOffer', 'PriceValidUntil'], seller),
     seller: {
@@ -157,7 +136,13 @@ const getSellerDefault = (sellers) => {
 const composeAggregateOffer = (
   product,
   currency,
-  { decimals, pricesWithTax, useSellerDefault, disableAggregateOffer }
+  {
+    decimals,
+    pricesWithTax,
+    useSellerDefault,
+    disableAggregateOffer,
+    gtinValue,
+  }
 ) => {
   const items = product.items || []
   const allSellers = getAllSellers(items)
@@ -169,6 +154,7 @@ const composeAggregateOffer = (
         decimals,
         pricesWithTax,
         useSellerDefault,
+        gtinValue,
       })
     )
     .filter(Boolean)
@@ -231,6 +217,7 @@ export const parseToJsonLD = ({
     pricesWithTax,
     useSellerDefault,
     disableAggregateOffer,
+    gtinValue,
   })
 
   if (offers === null) {
@@ -241,15 +228,9 @@ export const parseToJsonLD = ({
   const category = getCategoryName(product)
 
   const rawGTIN = selectedItem?.[gtinValue]
-  const gtinObj =
-    gtinValue === 'itemId'
-      ? normalizeGTIN(selectedItem?.itemId)
-      : normalizeGTIN(rawGTIN)
+  const gtin = normalizeGTIN(rawGTIN)
 
-  const gtinFields = mapGtinToSpecificField(gtinObj)
-  const gtin = gtinObj?.value ?? null
-
-  const merchantSKU = selectedItem?.itemId || null
+  const merchantSKU = gtin || selectedItem?.itemId || null
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -265,7 +246,6 @@ export const parseToJsonLD = ({
     sku: merchantSKU,
     category,
     offers: disableOffers ? null : offers,
-    ...gtinFields,
     gtin,
   }
 
