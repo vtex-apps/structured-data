@@ -101,8 +101,6 @@ const parseSKUToOffer = (
   const normalizedGtin = normalizeGTIN(rawSkuValue)
   const offerSku = normalizedGtin || item.itemId
 
-  if (availability === OUT_OF_STOCK && price === 0) return null
-
   const offer = {
     '@type': 'Offer',
     price,
