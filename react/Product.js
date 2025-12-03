@@ -60,16 +60,21 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const formatGTIN = (gtin) => {
-  if (!gtin || typeof gtin !== 'string') return null
+const normalizeGTIN = (raw) => {
+  if (raw === null || raw === undefined) return null
+  const digits = String(raw).replace(/\D+/g, '')
+
+  if (!digits || /^0+$/.test(digits)) return null
 
   const validLengths = [8, 12, 13, 14]
 
-  if (validLengths.includes(gtin.length)) return gtin
+  if (validLengths.includes(digits.length)) return digits
 
-  const targetLength = validLengths.find((len) => gtin.length < len) || 14
+  const validLengthsTarget = validLengths.find((len) => digits.length < len)
 
-  return gtin.padStart(targetLength, '0')
+  if (validLengthsTarget) return digits.padStart(validLengthsTarget, '0')
+
+  return null
 }
 
 const parseSKUToOffer = (
@@ -82,13 +87,7 @@ const parseSKUToOffer = (
     : lowHighForSellers(item.sellers, { pricesWithTax }).low
 
   const availability = getSKUAvailabilityString(seller)
-
   const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
-
-  const rawGTIN = item?.[gtinValue]
-  const isGTINField = gtinValue !== 'itemId' && typeof rawGTIN === 'string'
-  const gtin = isGTINField ? formatGTIN(rawGTIN) : null
-  const skuValue = isGTINField ? gtin : item.itemId
 
   // When a product is not available the API can't define its price and returns zero.
   // If we set structured data product price as zero, Google will show that the
@@ -98,12 +97,16 @@ const parseSKUToOffer = (
     return null
   }
 
+  const rawSkuValue = item?.[gtinValue]
+  const normalizedGtin = normalizeGTIN(rawSkuValue)
+  const offerSku = normalizedGtin || item.itemId
+
   const offer = {
     '@type': 'Offer',
     price,
     priceCurrency: currency,
     availability,
-    sku: skuValue,
+    sku: offerSku,
     itemCondition: 'http://schema.org/NewCondition',
     priceValidUntil: path(['commertialOffer', 'PriceValidUntil'], seller),
     seller: {
@@ -220,12 +223,12 @@ export const parseToJsonLD = ({
   }
 
   const baseUrl = getBaseUrl()
-
   const category = getCategoryName(product)
 
   const rawGTIN = selectedItem?.[gtinValue]
-  const gtin = formatGTIN(rawGTIN)
-  const fallbackSKU = selectedItem?.itemId || null
+  const gtin = normalizeGTIN(rawGTIN)
+
+  const merchantSKU = gtin || selectedItem?.itemId || null
 
   const productLD = {
     '@context': 'https://schema.org/',
@@ -238,7 +241,7 @@ export const parseToJsonLD = ({
       : images[0]?.imageUrl || null,
     description: product.metaTagDescription || product.description,
     mpn,
-    sku: gtin || fallbackSKU,
+    sku: merchantSKU,
     category,
     offers: disableOffers ? null : offers,
     gtin,
@@ -274,6 +277,8 @@ function StructuredData({ product, selectedItem }) {
     disableAggregateOffer,
     gtinValue,
   })
+
+  if (!productLD) return null
 
   return <script {...jsonLdScriptProps(productLD)} />
 }
