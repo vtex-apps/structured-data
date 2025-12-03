@@ -66,13 +66,13 @@ const normalizeGTIN = (raw) => {
 
   if (!digits || /^0+$/.test(digits)) return null
 
-  const VALID = [8, 12, 13, 14]
+  const validLengths = [8, 12, 13, 14]
 
-  if (VALID.includes(digits.length)) return digits
+  if (validLengths.includes(digits.length)) return digits
 
-  const target = VALID.find((len) => digits.length < len)
+  const validLengthsTarget = validLengths.find((len) => digits.length < len)
 
-  if (target) return digits.padStart(target, '0')
+  if (validLengthsTarget) return digits.padStart(validLengthsTarget, '0')
 
   return null
 }
