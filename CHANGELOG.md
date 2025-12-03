@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Creation of a new appSettings (false by default) `disableProduct` - used to disable the product enrichment in Product structured data (JSON-LD).
+
 ## [0.16.0] - 2025-07-18
 
 ## [0.15.0] - 2025-04-28

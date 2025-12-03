@@ -80,6 +80,12 @@
         ],
         "default": "ean",
         "description": "Set the value used for GTIN"
+      },
+      "disableProduct": {
+        "title": "Disable Product",
+        "type": "boolean",
+        "default": false,
+        "description": "Disable product"
       }
     }
   },
