@@ -1,0 +1,23 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: structured-data
+  description: Automatically generates Schema.org structured data (JSON-LD) for
+    products, improving SEO and enabling them to appear with rich snippets in
+    Google search results. Offers customizable settings such as choosing between
+    EAN or itemId as SKU identifier, price control, taxes and offers.
+  tags:
+    - javascript
+  annotations:
+    vtex.com/janus-acronym: ""
+    vtex.com/o11y-os-index: ""
+    grafana/dashboard-selector: ""
+    github.com/project-slug: vtex-apps/structured-data
+    vtex.com/platform-flow-id: ""
+    backstage.io/techdocs-ref: dir:../
+    vtex.com/application-id: 6CO2CN2Z
+spec:
+  lifecycle: stable
+  owner: te-0013
+  type: frontend-ui
+  dependsOn: []
