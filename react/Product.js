@@ -260,7 +260,12 @@ function StructuredData({ product, selectedItem }) {
     useImagesArray,
     disableAggregateOffer,
     gtinValue,
+    disableProduct
   } = useAppSettings()
+
+  if (disableProduct) {
+    return null;
+  }
 
   const productLD = parseToJsonLD({
     product,
