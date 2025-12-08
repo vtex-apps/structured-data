@@ -15,7 +15,7 @@ metadata:
     github.com/project-slug: vtex-apps/structured-data
     vtex.com/platform-flow-id: ""
     backstage.io/techdocs-ref: dir:../
-    vtex.com/application-id: 6CO2CN2Z
+    vtex.com/application-id: 6KRT3AL4
 spec:
   lifecycle: stable
   owner: te-0013
