@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Fixed formatting for the gtinValue coming back from getAppSettings, if this value is itemId it should not format
+
 ## [0.16.0] - 2025-07-18
 
 ## [0.15.0] - 2025-04-28
