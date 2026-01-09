@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Fixed
+- Using tha same Price varaible to compare High and Low price to Fix escenarios when sportPrice is not available
+
 ## [0.16.1] - 2025-12-08
 
 ### Fixed

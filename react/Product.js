@@ -9,7 +9,6 @@ import { jsonLdScriptProps } from 'react-schemaorg'
 import useAppSettings from './hooks/useAppSettings'
 import { getBaseUrl } from './modules/baseUrl'
 
-const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
 const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
@@ -167,7 +166,7 @@ const composeAggregateOffer = (
 
   const aggregateOffer = {
     '@type': 'AggregateOffer',
-    lowPrice: getFinalPrice(low, getSpotPrice, { decimals, pricesWithTax }),
+    lowPrice: getFinalPrice(low, getPrice, { decimals, pricesWithTax }),
     highPrice: getFinalPrice(high, getPrice, { decimals, pricesWithTax }),
     priceCurrency: currency,
     offers: offersList,
