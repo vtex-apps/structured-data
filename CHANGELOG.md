@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [0.17.0] - 2026-03-11
+
 ### Added
 
 - Create new setting `disableProductStructuredData`, false by default, used to disable the product structured data in PDP
