@@ -258,12 +258,15 @@ function StructuredData({ product, selectedItem }) {
   const {
     decimals,
     disableOffers,
+    disableProductStructuredData,
     pricesWithTax,
     useSellerDefault,
     useImagesArray,
     disableAggregateOffer,
     gtinValue,
   } = useAppSettings()
+
+  if (disableProductStructuredData) return null
 
   const productLD = parseToJsonLD({
     product,

@@ -3,6 +3,7 @@ import { useQuery } from 'react-apollo'
 import GET_SETTINGS from '../queries/getSettings.graphql'
 
 const DEFAULT_DISABLE_OFFERS = false
+const DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA = false
 const DEFAULT_DECIMALS = 2
 const DEFAULT_PRICES_WITH_TAX = false
 const DEFAULT_USE_SELLER_DEFAULT = false
@@ -12,6 +13,7 @@ const DEFAULT_GTIN_VALUE = 'itemId'
 
 interface Settings {
   disableOffers: boolean
+  disableProductStructuredData: boolean
   decimals: number
   pricesWithTax: boolean
   useSellerDefault: boolean
@@ -27,6 +29,7 @@ const useAppSettings = (): Settings => {
     const {
       decimals,
       disableOffers,
+      disableProductStructuredData,
       pricesWithTax,
       useSellerDefault,
       useImagesArray,
@@ -36,6 +39,7 @@ const useAppSettings = (): Settings => {
 
     return {
       disableOffers: disableOffers || DEFAULT_DISABLE_OFFERS,
+      disableProductStructuredData: disableProductStructuredData || DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
       decimals: decimals || DEFAULT_DECIMALS,
       pricesWithTax: pricesWithTax || DEFAULT_PRICES_WITH_TAX,
       useSellerDefault: useSellerDefault || DEFAULT_USE_SELLER_DEFAULT,
@@ -48,6 +52,7 @@ const useAppSettings = (): Settings => {
 
   return {
     disableOffers: DEFAULT_DISABLE_OFFERS,
+    disableProductStructuredData: DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
     decimals: DEFAULT_DECIMALS,
     pricesWithTax: DEFAULT_PRICES_WITH_TAX,
     useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,

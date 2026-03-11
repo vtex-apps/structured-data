@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+### Added
+
+- Create new setting `disableProductStructuredData`, false by default, used to disable the product structured data in PDP
+
 ## [0.16.1] - 2025-12-08
 
 ### Fixed
+
 - Fixed formatting for the gtinValue coming back from getAppSettings, if this value is itemId it should not format
 
 ## [0.16.0] - 2025-07-18
@@ -17,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [0.15.0] - 2025-04-28
 
 ### Added
+
 - Add new setting in app settings
 - Use this new setting value in Product JS
 

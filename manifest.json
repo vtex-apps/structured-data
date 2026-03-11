@@ -23,6 +23,12 @@
     "type": "object",
     "access": "public",
     "properties": {
+      "disableProductStructuredData": {
+        "title": "Disable Structured Data in PDP",
+        "type": "boolean",
+        "default": false,
+        "description": "Disable structured data in Product Details Page"
+      },
       "disableOffers": {
         "title": "Disable Offers",
         "type": "boolean",
