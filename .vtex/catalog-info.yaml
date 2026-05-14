@@ -17,7 +17,7 @@ metadata:
     backstage.io/techdocs-ref: dir:../
     vtex.com/application-id: 6KRT3AL4
     vtex.com/sdd-check-skip: 'true'
-    vtex.com/sdd-check-skip-reason: Not part of our core flow, sdd will be adopted in next wave
+    vtex.com/sdd-check-skip-reason: Non-core component. SDD adoption deferred to next adoption wave
 spec:
   lifecycle: stable
   owner: te-0013
