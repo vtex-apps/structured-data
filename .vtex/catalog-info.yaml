@@ -16,6 +16,8 @@ metadata:
     vtex.com/platform-flow-id: Shopper#1
     backstage.io/techdocs-ref: dir:../
     vtex.com/application-id: 6KRT3AL4
+    vtex.com/sdd-check-skip: 'true'
+    vtex.com/sdd-check-skip-reason: Not part of our core flow, sdd will be adopted in next wave
 spec:
   lifecycle: stable
   owner: te-0013
