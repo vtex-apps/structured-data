@@ -9,7 +9,8 @@ const DEFAULT_PRICES_WITH_TAX = false
 const DEFAULT_USE_SELLER_DEFAULT = false
 const DEFAULT_USE_IMAGES_ARRAY = false
 const DEFAULT_DISABLE_AGGREGATE_OFFER = false
-const DEFAULT_GTIN_VALUE = 'itemId'
+// Must match the default declared in manifest.json settingsSchema.
+const DEFAULT_GTIN_VALUE = 'ean'
 
 interface Settings {
   disableOffers: boolean
@@ -20,6 +21,27 @@ interface Settings {
   useImagesArray: boolean
   disableAggregateOffer: boolean
   gtinValue?: string
+}
+
+const DEFAULT_SETTINGS: Settings = {
+  disableOffers: DEFAULT_DISABLE_OFFERS,
+  disableProductStructuredData: DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
+  decimals: DEFAULT_DECIMALS,
+  pricesWithTax: DEFAULT_PRICES_WITH_TAX,
+  useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,
+  useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
+  disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
+  gtinValue: DEFAULT_GTIN_VALUE,
+}
+
+const parseSettings = (message: string): Partial<Settings> => {
+  try {
+    const parsed = JSON.parse(message)
+
+    return parsed && typeof parsed === 'object' ? parsed : {}
+  } catch {
+    return {}
+  }
 }
 
 const useAppSettings = (): Settings => {
@@ -35,31 +57,25 @@ const useAppSettings = (): Settings => {
       useImagesArray,
       disableAggregateOffer,
       gtinValue,
-    } = JSON.parse(data.publicSettingsForApp.message)
+    } = parseSettings(data.publicSettingsForApp.message)
 
+    // `??` instead of `||` so that falsy but valid values (e.g. `decimals: 0`)
+    // are kept.
     return {
-      disableOffers: disableOffers || DEFAULT_DISABLE_OFFERS,
-      disableProductStructuredData: disableProductStructuredData || DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
-      decimals: decimals || DEFAULT_DECIMALS,
-      pricesWithTax: pricesWithTax || DEFAULT_PRICES_WITH_TAX,
-      useSellerDefault: useSellerDefault || DEFAULT_USE_SELLER_DEFAULT,
-      useImagesArray: useImagesArray || DEFAULT_USE_IMAGES_ARRAY,
+      disableOffers: disableOffers ?? DEFAULT_DISABLE_OFFERS,
+      disableProductStructuredData:
+        disableProductStructuredData ?? DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
+      decimals: decimals ?? DEFAULT_DECIMALS,
+      pricesWithTax: pricesWithTax ?? DEFAULT_PRICES_WITH_TAX,
+      useSellerDefault: useSellerDefault ?? DEFAULT_USE_SELLER_DEFAULT,
+      useImagesArray: useImagesArray ?? DEFAULT_USE_IMAGES_ARRAY,
       disableAggregateOffer:
-        disableAggregateOffer || DEFAULT_DISABLE_AGGREGATE_OFFER,
-      gtinValue: gtinValue || DEFAULT_GTIN_VALUE,
+        disableAggregateOffer ?? DEFAULT_DISABLE_AGGREGATE_OFFER,
+      gtinValue: gtinValue ?? DEFAULT_GTIN_VALUE,
     }
   }
 
-  return {
-    disableOffers: DEFAULT_DISABLE_OFFERS,
-    disableProductStructuredData: DEFAULT_DISABLE_PRODUCT_STRUCTURED_DATA,
-    decimals: DEFAULT_DECIMALS,
-    pricesWithTax: DEFAULT_PRICES_WITH_TAX,
-    useSellerDefault: DEFAULT_USE_SELLER_DEFAULT,
-    useImagesArray: DEFAULT_USE_IMAGES_ARRAY,
-    disableAggregateOffer: DEFAULT_DISABLE_AGGREGATE_OFFER,
-    gtinValue: DEFAULT_GTIN_VALUE,
-  }
+  return DEFAULT_SETTINGS
 }
 
 export default useAppSettings

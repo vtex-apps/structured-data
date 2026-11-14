@@ -21,12 +21,20 @@ export function getProductList({
   disableOffers,
   decimals,
   pricesWithTax,
+  useSellerDefault,
+  useImagesArray,
+  disableAggregateOffer,
+  gtinValue,
   currency,
   products,
 }: {
   disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
+  useSellerDefault?: boolean
+  useImagesArray?: boolean
+  disableAggregateOffer?: boolean
+  gtinValue?: string
   currency: string
   products?: Product[]
 }) {
@@ -43,6 +51,10 @@ export function getProductList({
       disableOffers,
       decimals,
       pricesWithTax,
+      useSellerDefault,
+      useImagesArray,
+      disableAggregateOffer,
+      gtinValue,
     })
 
     return {
@@ -64,11 +76,24 @@ function ProductList({ products }: Props) {
     culture: { currency },
   } = useRuntime()
 
-  const { disableOffers, decimals, pricesWithTax } = useAppSettings()
+  const {
+    disableOffers,
+    decimals,
+    pricesWithTax,
+    useSellerDefault,
+    useImagesArray,
+    disableAggregateOffer,
+    gtinValue,
+  } = useAppSettings()
+
   const productListLD: WithContext<ItemList> | null = getProductList({
     disableOffers,
     decimals,
     pricesWithTax,
+    useSellerDefault,
+    useImagesArray,
+    disableAggregateOffer,
+    gtinValue,
     currency,
     products,
   })
