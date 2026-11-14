@@ -21,16 +21,25 @@ export function getProductList({
   disableOffers,
   decimals,
   pricesWithTax,
+  useSellerDefault,
+  useImagesArray,
+  disableAggregateOffer,
+  gtinValue,
   currency,
   products,
 }: {
   disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
+  useSellerDefault?: boolean
+  useImagesArray?: boolean
+  disableAggregateOffer?: boolean
+  gtinValue?: string
   currency: string
   products?: Product[]
 }) {
-  if (!Array.isArray(products)) {
+  // An ItemList without elements is invalid markup, so render nothing.
+  if (!Array.isArray(products) || products.length === 0) {
     return null
   }
 
@@ -43,6 +52,10 @@ export function getProductList({
       disableOffers,
       decimals,
       pricesWithTax,
+      useSellerDefault,
+      useImagesArray,
+      disableAggregateOffer,
+      gtinValue,
     })
 
     return {
@@ -64,11 +77,24 @@ function ProductList({ products }: Props) {
     culture: { currency },
   } = useRuntime()
 
-  const { disableOffers, decimals, pricesWithTax } = useAppSettings()
+  const {
+    disableOffers,
+    decimals,
+    pricesWithTax,
+    useSellerDefault,
+    useImagesArray,
+    disableAggregateOffer,
+    gtinValue,
+  } = useAppSettings()
+
   const productListLD: WithContext<ItemList> | null = getProductList({
     disableOffers,
     decimals,
     pricesWithTax,
+    useSellerDefault,
+    useImagesArray,
+    disableAggregateOffer,
+    gtinValue,
     currency,
     products,
   })

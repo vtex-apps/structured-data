@@ -5,7 +5,10 @@ export function parseToJsonLD({
   disableOffers,
   decimals,
   pricesWithTax,
-  userSellerDefault,
+  useSellerDefault,
+  useImagesArray,
+  disableAggregateOffer,
+  gtinValue,
 }: {
   product: unknown
   selectedItem: unknown
@@ -13,21 +16,24 @@ export function parseToJsonLD({
   disableOffers: boolean
   decimals: number
   pricesWithTax: boolean
-  userSellerDefault?: boolean
+  useSellerDefault?: boolean
+  useImagesArray?: boolean
+  disableAggregateOffer?: boolean
+  gtinValue?: string
 }): {
   '@context': string
   '@type': string
   '@id': string
   name: string
-  brand: {
+  brand?: {
     '@type': string
     name: string
   }
   image: string
   description: string
-  gtin: string
+  gtin: string | null
   mpn: string
-  sku: number
+  sku: string | null
   category: string
   offers: {
     '@type': string
@@ -42,8 +48,12 @@ export function parseToJsonLD({
       }
     }>
     offerCount: number
-  }
-}
+  } | null
+} | null
+
+export function hasValidCheckDigit(digits: string): boolean
+
+export function normalizeGTIN(raw: unknown): string | null
 
 declare const _default: import('react').MemoExoticComponent<typeof StructuredData>
 

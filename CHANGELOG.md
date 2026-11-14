@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Update DK Catalog platform-flow-id
 
+### Fixed
+
+- `gtinValue` default in code now matches the settings schema (`ean`) instead of `itemId`.
+- `gtin` is only published when the value passes the GS1 check digit, so internal SKU ids are no longer padded into fake GTINs.
+- `offerCount` now matches the number of offers actually published.
+- `useSellerDefault` falls back to the cheapest seller when a SKU has no default seller, instead of publishing an offer without price.
+- `disableOffers` no longer removes the whole Product markup for unavailable products.
+- `decimals` is applied to prices with and without taxes, and `decimals: 0` is respected.
+- `ProductList` forwards all app settings to `parseToJsonLD`.
+- A missing `brand` no longer crashes the component, and an invalid settings message falls back to defaults.
+- Offers fall back to `Price` when the seller does not return `spotPrice`.
+- `ProductList` renders nothing for an empty product list instead of an `ItemList` without elements.
+
 ## [0.17.0] - 2026-03-11
 
 ### Added

@@ -127,7 +127,7 @@ describe('Product List Structured Data', () => {
       currency,
     })
 
-    expect(productListLD.itemListElement).toHaveLength(0)
+    expect(productListLD).toBeNull()
   })
 
   it('Handles undefined case', () => {

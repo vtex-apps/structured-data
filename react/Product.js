@@ -9,18 +9,30 @@ import { jsonLdScriptProps } from 'react-schemaorg'
 import useAppSettings from './hooks/useAppSettings'
 import { getBaseUrl } from './modules/baseUrl'
 
-const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
+// Some catalogs (e.g. marketplace or legacy sellers) do not return spotPrice.
+// Fall back to Price so offers are not published without a price.
+const getSpotPrice = (item) =>
+  path(['commertialOffer', 'spotPrice'], item) ?? getPrice(item)
+
 const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
 
+const roundPrice = (value, decimals) =>
+  Math.round((value + Number.EPSILON) * 10 ** decimals) / 10 ** decimals
+
 const getFinalPrice = (value, getPriceFunc, { decimals, pricesWithTax }) => {
-  return pricesWithTax
-    ? Math.round(
-        (getPriceFunc(value) + getTax(value) + Number.EPSILON) * 10 ** decimals
-      ) /
-        10 ** decimals
-    : getPriceFunc(value)
+  const price = getPriceFunc(value)
+
+  if (price === undefined || price === null) {
+    return price
+  }
+
+  const finalPrice = pricesWithTax ? price + (getTax(value) || 0) : price
+
+  return Number.isInteger(decimals) && decimals >= 0
+    ? roundPrice(finalPrice, decimals)
+    : finalPrice
 }
 
 const sortByPriceAsc = sort(
@@ -60,7 +72,22 @@ const OUT_OF_STOCK = 'http://schema.org/OutOfStock'
 const getSKUAvailabilityString = (seller) =>
   isSkuAvailable(seller) ? IN_STOCK : OUT_OF_STOCK
 
-const normalizeGTIN = (raw) => {
+// GS1 check digit validation, valid for GTIN-8, 12, 13 and 14.
+export const hasValidCheckDigit = (digits) => {
+  const numbers = digits.split('').map(Number)
+  const checkDigit = numbers.pop()
+  const sum = numbers
+    .reverse()
+    .reduce((acc, number, index) => acc + number * (index % 2 === 0 ? 3 : 1), 0)
+
+  return (10 - (sum % 10)) % 10 === checkDigit
+}
+
+// Returns a GTIN only when the value is a real one. Left-padding is allowed
+// because it keeps the check digit of a real GTIN (e.g. UPC-12 to GTIN-13),
+// but a padded internal id (e.g. the SKU id `27` -> `00000027`) fails the
+// check digit and is discarded instead of being published as a GTIN.
+export const normalizeGTIN = (raw) => {
   if (raw === null || raw === undefined) return null
   const digits = String(raw).replace(/\D+/g, '')
 
@@ -68,13 +95,19 @@ const normalizeGTIN = (raw) => {
 
   const validLengths = [8, 12, 13, 14]
 
-  if (validLengths.includes(digits.length)) return digits
+  const normalized = validLengths.includes(digits.length)
+    ? digits
+    : digits.padStart(validLengths.find((len) => digits.length < len) ?? 0, '0')
 
-  const validLengthsTarget = validLengths.find((len) => digits.length < len)
+  if (!validLengths.includes(normalized.length)) return null
 
-  if (validLengthsTarget) return digits.padStart(validLengthsTarget, '0')
+  return hasValidCheckDigit(normalized) ? normalized : null
+}
 
-  return null
+const getOfferSeller = (sellers, { pricesWithTax, useSellerDefault }) => {
+  const defaultSeller = useSellerDefault ? getSellerDefault(sellers) : null
+
+  return defaultSeller ?? lowHighForSellers(sellers, { pricesWithTax }).low
 }
 
 const parseSKUToOffer = (
@@ -82,9 +115,10 @@ const parseSKUToOffer = (
   currency,
   { decimals, pricesWithTax, useSellerDefault, gtinValue }
 ) => {
-  const seller = useSellerDefault
-    ? getSellerDefault(item.sellers)
-    : lowHighForSellers(item.sellers, { pricesWithTax }).low
+  const seller = getOfferSeller(item.sellers, {
+    pricesWithTax,
+    useSellerDefault,
+  })
 
   const availability = getSKUAvailabilityString(seller)
   const price = getFinalPrice(seller, getSpotPrice, { decimals, pricesWithTax })
@@ -125,7 +159,7 @@ const getAllSellers = (items) => {
   return flat
 }
 
-const getSellerDefault = (sellers) => {
+const getSellerDefault = (sellers = []) => {
   const seller = sellers.find((s) => s.sellerDefault)
 
   return seller
@@ -171,7 +205,7 @@ const composeAggregateOffer = (
     highPrice: getFinalPrice(high, getPrice, { decimals, pricesWithTax }),
     priceCurrency: currency,
     offers: offersList,
-    offerCount: items.length,
+    offerCount: offersList.length,
   }
 
   return aggregateOffer
@@ -183,9 +217,15 @@ const getCategoryName = (product) =>
   product.categoryTree[product.categoryTree.length - 1].name
 
 function parseBrand(brand) {
+  const name = typeof brand === 'string' ? brand : brand?.name
+
+  if (!name) {
+    return undefined
+  }
+
   return {
     '@type': 'Brand',
-    name: typeof brand === 'string' ? brand : brand.name,
+    name,
   }
 }
 
@@ -210,15 +250,19 @@ export const parseToJsonLD = ({
     product?.productReference ||
     product?.productId
 
-  const offers = composeAggregateOffer(product, currency, {
-    decimals,
-    pricesWithTax,
-    useSellerDefault,
-    disableAggregateOffer,
-    gtinValue,
-  })
+  // When offers are disabled the Product markup is still valid without them,
+  // so an unavailable product must not remove the whole JSON-LD.
+  const offers = disableOffers
+    ? null
+    : composeAggregateOffer(product, currency, {
+        decimals,
+        pricesWithTax,
+        useSellerDefault,
+        disableAggregateOffer,
+        gtinValue,
+      })
 
-  if (offers === null) {
+  if (!disableOffers && offers === null) {
     return null
   }
 
@@ -243,7 +287,7 @@ export const parseToJsonLD = ({
     mpn,
     sku: merchantSKU,
     category,
-    offers: disableOffers ? null : offers,
+    offers,
     gtin,
   }
 
