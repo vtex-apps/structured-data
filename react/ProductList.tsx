@@ -38,7 +38,8 @@ export function getProductList({
   currency: string
   products?: Product[]
 }) {
-  if (!Array.isArray(products)) {
+  // An ItemList without elements is invalid markup, so render nothing.
+  if (!Array.isArray(products) || products.length === 0) {
     return null
   }
 

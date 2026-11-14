@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - `decimals` is applied to prices with and without taxes, and `decimals: 0` is respected.
 - `ProductList` forwards all app settings to `parseToJsonLD`.
 - A missing `brand` no longer crashes the component, and an invalid settings message falls back to defaults.
+- Offers fall back to `Price` when the seller does not return `spotPrice`.
+- `ProductList` renders nothing for an empty product list instead of an `ItemList` without elements.
 
 ## [0.17.0] - 2026-03-11
 

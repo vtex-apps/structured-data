@@ -9,8 +9,12 @@ import { jsonLdScriptProps } from 'react-schemaorg'
 import useAppSettings from './hooks/useAppSettings'
 import { getBaseUrl } from './modules/baseUrl'
 
-const getSpotPrice = path(['commertialOffer', 'spotPrice'])
 const getPrice = path(['commertialOffer', 'Price'])
+// Some catalogs (e.g. marketplace or legacy sellers) do not return spotPrice.
+// Fall back to Price so offers are not published without a price.
+const getSpotPrice = (item) =>
+  path(['commertialOffer', 'spotPrice'], item) ?? getPrice(item)
+
 const getTax = path(['commertialOffer', 'Tax'])
 const getAvailableQuantity = pathOr(0, ['commertialOffer', 'AvailableQuantity'])
 

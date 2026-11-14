@@ -192,4 +192,16 @@ describe('Product Structured Data correctness', () => {
 
     expect(result.brand).toBeUndefined()
   })
+  it('falls back to Price when the seller has no spotPrice', () => {
+    const product = createProduct()
+    const item = createItem({ id: '5', price: 50 })
+
+    delete item.sellers[0].commertialOffer.spotPrice
+    product.items.push(item)
+
+    const result = parseToJsonLD({ ...baseArgs, product, selectedItem: item })
+
+    expect(result.offers.lowPrice).toBe(50)
+    expect(result.offers.offers[0].price).toBe(50)
+  })
 })
